@@ -65,11 +65,11 @@ body{
 
 .menu-home:hover {
     color:#ff6b35ff;
-    background-color: #012a52ff;
     transform: translateY(-3px);
 }
 
 #container-home .menu-home:nth-child(5){
     grid-column: span 2;
 }
+
 
