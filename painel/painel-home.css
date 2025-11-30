@@ -1,40 +1,57 @@
-body{
-    background-color:#edf2fbff;
+/* ===== BASE ===== */
+body {
+    background-color: #edf2fbff;
     background-image: url("background.svg");
     background-repeat: no-repeat;
     background-position: right top;
     font-family: "Inter", sans-serif;
-}
-.cabecalho-home h1 {
-    color: #ff6b35ff;
-    font-size: 48px;
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 10px;
+    margin: 0;
 }
 
-.cabecalho-home p {
+/* ===== HEADER ===== */
+.header-home {
+    position: relative;
+    text-align: center;
+    padding-top: 40px;
+    margin-bottom: 25px;
+}
+
+.logo-topo {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 180px;
+}
+
+.texto-header {
+    margin-top: 80px;
+}
+
+.header-home h1 {
+    color: #ff6b35ff;
+    font-size: 48px;
+}
+
+.header-home p {
     color: #003566ff;
     font-size: 16px;
     font-weight: 500;
-    text-align: center;
-    margin-bottom: 40px;
 }
 
-
-#container-home{
-    display:grid;
+/* ===== CONTAINER HOME ===== */
+#container-home {
+    display: grid;
     grid-template-columns: 1fr 1fr;
     max-width: 700px;
     margin: 0 auto;
     gap: 20px;
 }
 
+/* ===== MENU-CARD ===== */
 .menu-home { 
     display: flex;
-    flex-direction: column;    
-    align-items: flex-start;   
-    gap: 5px;                  
+    flex-direction: column;
+    gap: 5px;
     padding: 18px 20px;
     background-color: #003566ff;
     color: #d7e3fcff;
@@ -44,31 +61,34 @@ body{
     transition: all 0.2s ease;
 }
 
-.menu-home .linha-topo{
+.menu-home .linha-topo {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-    font-size: 25px;
-    color: inherit;
+    align-items: center; 
+    gap: 10px;
 }
 
-.menu-home .linha-topo svg {
-    width: 24px;
-    height: 24px; 
+.menu-home .linha-topo img {
+    width: 30px;
+    height: 30px; 
+}
+
+.titulo-item {
+    font-size: 22px;
+    line-height: 1;   
+    margin: 0;
 }
 
 .menu-home p.total {
-    margin: 0;
     font-size: 14px;
+    margin: 0;
 }
 
 .menu-home:hover {
-    color:#ff6b35ff;
+    color: #ff6b35ff;
     transform: translateY(-3px);
 }
 
-#container-home .menu-home:nth-child(5){
+#container-home .menu-home:nth-child(5) {
     grid-column: span 2;
 }
 
