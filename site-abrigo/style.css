@@ -1,28 +1,186 @@
+@import url('fonts.css');
+@import "tailwindcss";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+/* 
+    font-family: 'Coolvetica';
+    font-family: 'KG Red Hands';
+    font-family: 'Be Vietnam Pro';
+    font-family: 'Zen Maru Gothic'; 
+    font-family: 'KGPerfectPenmanship';
+    font-family: 'LettersForLearners';
+
+*/
 :root{
-    --baby-pink: #ff99c8ff;
-    --lemon-chiffon: #fcf6bdff;
-    --frosted-mint: #d0f4deff;
-    --mauve: #e4c1f9ff;
-    --thistle: #cdb4dbff;
-    --pastel-petal: #ffc8ddff;
-    --baby-pink2: #ffafccff;
-    --icy-blue: #bde0feff;
-    --sky-blue: #a2d2ffff;
-    --alice-blue: #edf2fbff;
-    --lavender: #e2eafcff;
-    --lavender-2: #d7e3fcff;
-    --periwinkle: #ccdbfdff;
-    --periwinkle-2: #c1d3feff;
-    --periwinkle-3: #b6ccfeff;
-    --baby-blue-ice: #abc4ffff;
-    --atomic-tangerine: #ff6b35ff;
-    --peach-glow: #f7c59fff;
-    --beige: #efefd0ff;
-    --steel-azure: #004e89ff;
-    --baltic-blue: #1a659eff;
-    --ink-black: #000814ff;
-    --prussian-blue: #001d3dff;
-    --regal-navy: #003566ff;
-    --school-bus-yellow: #ffc300ff;
-    --gold: #ffd60aff;
+    --rosinha1: #FF99C8;  
+    --rosinha2: #FFAFCC;
+    --azul_esc1:#000814;
+    --azul_esc2:#001D3D;
+    --azul1:#003566;
+    --azul2:#004E89;
+    --azul3:#1A659E;
+    --laranja1:#FF6B35;
+    --bege:#F7C59F;
+    --azul_claro1:#A2D2FF;
+    --azul_claro2:#BDE0FE;
+    --azul_claro3:#E2EAFC;
+    --bg:#EDF2FB;
+    background-color: var(--bg);
+
 }
+body{
+    font-family: Be Vietnam Pro;
+}
+
+.navbar {
+    display: flex;
+    margin-top:18px;
+}
+
+.navbar a {
+    text-decoration: none;
+    font-size: 13pt;
+    color: var(--azul_esc1);
+}
+
+.navbar svg {
+    margin-left: 64px;
+}
+
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 26px;
+    margin-left: auto;
+    margin-right: 64px;
+}
+
+.navbar a.nav-active{
+    text-align: center;
+    align-content: center;
+    color: #ccdbfd;
+    background-color: #003566;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    width: 74px;
+    height: 32px;
+}
+
+.indicadoris button{
+    height: 0.6rem;
+    width: 0.6rem;
+    border-radius: 100%;
+}
+.carousel-banner{
+    width: 1790px;
+    height: 600px;
+    margin: auto;
+    border-radius: 8px;
+}
+
+.sc2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    margin-bottom: 50px;
+
+    a{
+        text-decoration: none;
+    }
+
+  
+}
+
+.eventos, .adocao, .galeria{
+    background-color: var(--azul3);
+    width: 447px;
+    height: 374px;
+}
+.eventos p, .adocao p, .galeria p{
+    color: #EDF2FB;
+    font-family: Coolvetica;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 119.952%; 
+}
+
+footer{
+    margin-top: 1rem;
+    display: flex;
+    height: 254px;
+    background-color: var(--azul1);
+    color: #FFF;
+    font-family: "Be Vietnam Pro";
+    font-size: 10pt;
+    flex-direction: column;
+    
+    ul{
+        color: #FFF;
+        font-family: Coolvetica;
+        width: 13rem;
+    }
+    
+    a{
+        text-decoration: none;
+        color: #FFF;
+    }
+    li{
+        margin-bottom: 5px;
+        color: #FFF;
+        font-family: "Be Vietnam Pro";
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: 5px;
+    }
+    h3{
+        font-family: Coolvetica;
+        font-size: 18pt;
+        font-weight: 200;
+        color: white;
+        margin-left: 1.7rem;
+        margin-bottom: -0.7rem;
+    }
+
+}
+.ft2{
+    display: flex;
+    height: 40px;
+    width: 100%;
+    background-color: var(--azul_esc2);
+    align-items: center;
+    padding: 0px 10px;
+}
+.titles{
+    color: #FFF;
+    font-family: Coolvetica;
+    font-size: 24px;
+    font-weight: 200;
+}
+.menu-footer{
+    columns: 2;
+    column-gap: 3.5rem;
+}
+footer ul a:hover{
+    color: var(--laranja1);
+    font-weight: bold;
+}
+
+.uk-transition-slide-right {
+    transition: 0.5s ease-in-out;
+}
+.ovl{
+     background-image: linear-gradient(90deg,rgba(0, 0, 0, 0) 0%, rgba(1, 53, 102, 1) 100%);
+     height: 100%;
+}   
+.ovl2{
+     background-image: linear-gradient(-90deg,rgba(0, 0, 0, 0) 0%, rgba(1, 53, 102, 1) 100%);
+     height: 100%;
+}   
+.ovl3{
+     background-image: linear-gradient(180deg,rgba(0, 0, 0, 0) 0%, rgba(1, 53, 102, 1) 100%);
+     height: 100%;
+}   
