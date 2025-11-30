@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - Animais</title>
+    
+    <link rel="stylesheet" href="painel-main.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-solid.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-regular.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-light.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/duotone.css"/>
+</head>
+
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <nav class="sidebar">
+        <img src="logo.svg" alt="Logo Vivi Pets" class="logo-sidebar">
+        <div class="logo-divider"></div>
+
+        <ul>
+            <li>
+                <a href="painel-home.html" class="nav-item">
+                    <img src="icone-home.svg" alt="Ícone Home">
+                    <span>Home</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="painel-animais.html" class="nav-item active">
+                    <img src="icone-animais.svg" alt="Ícone Animais">
+                    <span>Animais</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="painel-pessoas.html" class="nav-item">
+                    <img src="icone-pessoas.svg" alt="Ícone Pessoas">
+                    <span>Pessoas</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="painel-doacoes.html" class="nav-item">
+                    <img src="icone-doacoes.svg" alt="Ícone Doações">
+                    <span>Doações</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="painel-adocoes.html" class="nav-item">
+                    <img src="icone-adocoes.svg" alt="Ícone Adoções">
+                    <span>Adoções</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="painel-tratamentos.html" class="nav-item">
+                    <img src="icone-tratamentos.svg" alt="Ícone Tratamentos">
+                    <span>Tratamentos</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN ===== -->
+    <main class="dashboard">
+
+        <!-- ===== CARDS SUPERIORES ===== -->
+        <section class="cards-row">
+
+            <div class="card">
+                <h3>Gatos</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-gatos">0</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Cachorros</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-cachorros">0</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Animais</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-animais">0</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== INFO BOX ===== -->
+        <section class="info-box">
+
+            <!-- ===== BOTÕES DE AÇÃO ===== -->
+            <div class="action-buttons">
+                <button class="action-btn add"><img src="icone-adicionar-animal.svg" alt="Adicionar"></button>
+                <button class="action-btn edit"><img src="icone-editar.svg" alt="Editar"></button>
+                <button class="action-btn delete"><img src="icone-deletar.svg" alt="Remover"></button>
+            </div>
+
+            <div class="info-box-header">
+                <h2 class="info-title">Animais</h2>
+
+                <div class="search-wrapper">
+                    <input type="search" class="search-input"
+                    placeholder="Pesquisar por nome, ID ou microchip...">
+                </div>
+            </div>
+
+            <!-- ===== TABELA ===== -->
+            <div class="info-table">
+
+                <div class="table-head grid-animais">
+                    <div>ID</div>
+                    <div>Nome</div>
+                    <div>Espécie</div>
+                    <div>Sexo</div>
+                    <div>Idade</div>
+                    <div>Resgate</div>
+                    <div>Microchip</div>
+                    <div>Status</div>
+                    <div>Obs</div>
+                </div>
+
+                <!-- Exemplo -->
+                <div class="table-row grid-animais">
+                    <div>001</div>
+                    <div>Felix Mario Matheus</div>
+                    <div>Gato</div>
+                    <div>M</div>
+                    <div>3 anos</div>
+                    <div>2023-01-05</div>
+                    <div>12345ABC</div>
+                    <div>Disponível</div>
+                    <div>Nenhuma doença</div>
+                </div>
+
+                <div class="table-row grid-animais">
+                    <div>002</div>
+                    <div>Luna</div>
+                    <div>Cachorro</div>
+                    <div>F</div>
+                    <div>2 anos</div>
+                    <div>2023-04-12</div>
+                    <div>78910XYZ</div>
+                    <div>Adotado</div>
+                    <div>Nenhuma</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== CARDS INFERIORES ===== -->
+        <section class="cards-bottom">
+
+            <div class="card small-card">
+                <h3>Adotados</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-adotados">0</p>
+                </div>
+            </div>
+
+            <div class="card small-card">
+                <h3>Disponíveis</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-disponiveis">0</p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
