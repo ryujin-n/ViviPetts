@@ -1,7 +1,7 @@
 /* ===== BASE ===== */
 body {
     background-color: #edf2fbff;
-    background-image: url("background.svg");
+    background-image: url("painel-background.svg");
     background-repeat: no-repeat;
     background-position: right top;
     font-family: "Inter", sans-serif;
@@ -91,5 +91,6 @@ body {
 #container-home .menu-home:nth-child(5) {
     grid-column: span 2;
 }
+
 
 
