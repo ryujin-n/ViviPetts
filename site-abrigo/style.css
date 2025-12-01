@@ -1,5 +1,4 @@
 @import url("fonts.css");
-@import "tailwindcss";
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
 
@@ -32,6 +31,12 @@ body {
   font-family: Be Vietnam Pro;
   overflow-x: hidden;
 }
+button{
+  cursor: pointer;
+}
+p{
+  letter-spacing: 0px;
+}
 
 .navbar {
   display: flex;
@@ -55,17 +60,34 @@ body {
   margin-left: auto;
   margin-right: 64px;
 }
-
-.navbar a.nav-active {
-  text-align: center;
-  align-content: center;
-  color: #ccdbfd;
-  background-color: #003566;
-  border-radius: 0.5rem;
-  font-weight: bold;
-  width: 74px;
-  height: 32px;
+.navbar a {
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
 }
+
+.navbar a:hover {
+  transform: translateY(-3px);
+}
+
+.navbar a::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-color: var(--laranja1);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease;
+}
+
+.navbar a:hover::before {
+  transform: scaleY(1);
+}
+
 
 .indicadoris button {
   height: 0.6rem;
@@ -101,7 +123,7 @@ body {
 .galeria p {
   color: #edf2fb;
   font-family: Coolvetica;
-  font-size: 64px;
+  font-size: 74pt;
   font-style: normal;
   font-weight: 400;
   line-height: 119.952%;
@@ -110,7 +132,7 @@ body {
 .adocao p {
   color: #edf2fb;
   font-family: Coolvetica;
-  font-size: 64px;
+  font-size: 74pt;
   font-style: normal;
   font-weight: 400;
   line-height: 119.952%;
@@ -172,14 +194,8 @@ footer {
   columns: 2;
   column-gap: 3.5rem;
 }
-footer ul a:hover {
-  color: var(--laranja1);
-  font-weight: bold;
-}
 
-.uk-transition-slide-right {
-  transition: 0.5s ease-in-out;
-}
+
 .ovl {
   background-image: linear-gradient(
     90deg,

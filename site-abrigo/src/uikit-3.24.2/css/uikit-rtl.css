@@ -36,12 +36,7 @@ a,
   text-decoration: none;
   cursor: pointer;
 }
-a:hover,
-.uk-link:hover,
-.uk-link-toggle:hover .uk-link {
-  color: #0f6ecd;
-  text-decoration: underline;
-}
+
 /*
  * Fix text underline offset if `vertical-align`is set to `middle`
  */
