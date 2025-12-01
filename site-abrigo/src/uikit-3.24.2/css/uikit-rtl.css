@@ -5938,12 +5938,12 @@ ul.uk-nav-sub {
   /* 1 */
   display: flex;
   align-items: center;
+  border-radius: 0.4rem;
   /* 2 */
   column-gap: 0.25em;
   /* 3 */
   color: #999;
   font-size: 0.875rem;
-  text-transform: uppercase;
   transition: 0.1s ease-in-out;
   transition-property: color, background-color;
 }
@@ -5995,7 +5995,7 @@ ul.uk-nav-sub {
   margin-right: -20px;
 }
 .uk-subnav-pill > * {
-  padding-right: 20px;
+  padding-right: 0px;
 }
 .uk-subnav-pill > * > :first-child {
   padding: 5px 10px;
@@ -6004,8 +6004,8 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-subnav-pill > * > a:hover {
-  background-color: #f8f8f8;
-  color: #666;
+  background-color: #003566;
+  color: #ff6b35;
 }
 /* OnClick */
 .uk-subnav-pill > * > a:active {
@@ -6014,8 +6014,8 @@ ul.uk-nav-sub {
 }
 /* Active */
 .uk-subnav-pill > .uk-active > a {
-  background-color: #1e87f0;
-  color: #fff;
+  background-color: #ff99c8;
+  color: #003566;
 }
 /* Disabled
  * The same for all style modifiers
@@ -9809,7 +9809,8 @@ iframe[data-uk-cover] {
   --uk-scale-x: 1;
   --uk-scale-y: 1;
   transform: translate(var(--uk-position-translate-x), var(--uk-position-translate-y)) translate(var(--uk-translate-x), var(--uk-translate-y)) scale(var(--uk-scale-x), var(--uk-scale-y));
-  transition: 0.4s ease-in-out;
+  transition: 0.5s 
+cubic-bezier(0.27, 0.04, 0, 0.96);
   transition-property: opacity, transform, filter;
   opacity: 0;
 }
@@ -12771,8 +12772,8 @@ a.uk-offcanvas-bar:hover .uk-icon-overlay {
 .uk-card-secondary > :not([class*="uk-card-media"]) .uk-subnav-pill > .uk-active > a,
 .uk-overlay-primary .uk-subnav-pill > .uk-active > a,
 .uk-offcanvas-bar .uk-subnav-pill > .uk-active > a {
-  background-color: #fff;
-  color: #666;
+    background-color: #ff99c8;
+    color: #003566;
 }
 .uk-light .uk-subnav > .uk-disabled > a,
 .uk-section-primary:not(.uk-preserve-color) .uk-subnav > .uk-disabled > a,
