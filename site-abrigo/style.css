@@ -242,8 +242,6 @@ footer ul a:hover {
   background-color: #ff6b35;
   color: var(--azul1);
   border-color: #ff6b35;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-    border-color 0.2s ease-in-out;
 }
 .circle {
   position: absolute;
@@ -528,5 +526,6 @@ top: 10rem;
   border-color: var(--rosinha1);
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
     border-color 0.2s ease-in-out;
+    cursor: pointer;
 }
 

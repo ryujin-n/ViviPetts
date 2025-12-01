@@ -6004,8 +6004,8 @@ ul.uk-nav-sub {
 }
 /* Hover */
 .uk-subnav-pill > * > a:hover {
-  background-color: #003566;
-  color: #ff6b35;
+    background-color: #ffe7f2;
+    color: #ff99c8;
 }
 /* OnClick */
 .uk-subnav-pill > * > a:active {
