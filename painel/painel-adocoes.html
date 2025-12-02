@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Painel - Adoções</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="painel-main.css">
+    <link rel="stylesheet" href="painel-adocoes.css">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-solid.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-regular.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-light.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/duotone.css"/>
+</head>
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <nav class="sidebar">
+        <img src="logo.svg" alt="Logo" class="logo-sidebar"/>
+        <div class="logo-divider"></div>
+
+        <ul>
+            <li><a href="painel-home.html" class="nav-item"><img src="icone-home.svg"><span>Home</span></a></li>
+            <li><a href="painel-animais.html" class="nav-item"><img src="icone-animais.svg"><span>Animais</span></a></li>
+            <li><a href="painel-pessoas.html" class="nav-item"><img src="icone-pessoas.svg"><span>Pessoas</span></a></li>
+            <li><a href="painel-doacoes.html" class="nav-item"><img src="icone-doacoes.svg"><span>Doações</span></a></li>
+            <li>
+                <a href="painel-adocoes.html" class="nav-item active">
+                    <svg viewBox="0 0 43 44" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.5584 0C17.3701 0 26.1819 0 35.2606 0C35.2606 6.69281 35.2606 13.3856 35.2606 20.2812C33.905 20.9619 32.5493 21.6425 31.1526 22.3438C30.9266 22.5706 30.7007 22.7975 30.4679 23.0312C29.7747 23.1139 29.7747 23.1139 28.9132 23.1093C28.5911 23.1092 28.269 23.1092 27.9372 23.1091C27.5888 23.1056 27.2404 23.102 26.8814 23.0984C26.5252 23.0974 26.1691 23.0964 25.8021 23.0954C24.6614 23.0916 23.5209 23.083 22.3802 23.0742C21.6082 23.0708 20.8361 23.0676 20.0641 23.0648C18.1687 23.0572 16.2734 23.0457 14.3781 23.0312C14.3781 23.7119 14.3781 24.3925 14.3781 25.0938C19.0099 25.0938 23.6417 25.0938 28.4139 25.0938C28.0716 27.5 28.0716 27.5 27.7292 28.1875C23.3234 28.1875 18.9175 28.1875 14.3781 28.1875C14.3781 28.9816 14.3781 29.7756 14.3781 30.5938C18.784 30.5938 23.1898 30.5938 27.7292 30.5938C27.7292 32.5222 27.7292 34.4506 27.7292 36.4375C21.4028 36.4375 15.0765 36.4375 8.5584 36.4375C8.5584 24.4131 8.5584 12.3888 8.5584 0ZM20.8825 4.125C20.8825 4.91906 20.8825 5.71312 20.8825 6.53125C21.5603 6.53125 22.2381 6.53125 22.9365 6.53125C22.9365 5.73719 22.9365 4.94313 22.9365 4.125C22.2587 4.125 21.5809 4.125 20.8825 4.125ZM16.0898 5.5C15.6379 5.95375 15.186 6.4075 14.7204 6.875C15.0594 7.32875 15.3983 7.7825 15.7475 8.25C16.3123 8.02312 16.8772 7.79625 17.4591 7.5625C17.4591 7.22219 17.4591 6.88188 17.4591 6.53125C16.795 5.94504 16.795 5.94504 16.0898 5.5ZM27.3869 5.5C26.935 6.06719 26.4831 6.63438 26.0175 7.21875C26.9324 8.02411 26.9324 8.02411 28.0716 8.25C28.2975 7.68281 28.5234 7.11562 28.7562 6.53125C28.3043 6.19094 27.8525 5.85063 27.3869 5.5ZM16.1326 11.9238C15.2748 13.2665 14.9173 14.2208 15.0628 15.8125C15.5186 17.4577 16.0937 18.3205 17.4912 19.3198C18.9497 20.104 20.2821 20.1423 21.9095 20.1094C22.304 20.1174 22.304 20.1174 22.7065 20.1255C24.6461 20.1122 25.8029 19.6951 27.3869 18.5625C28.4181 17.3544 28.8776 15.9825 28.7776 14.3945C28.485 12.9135 27.8027 12.0329 26.7022 11C23.5006 8.94798 18.8709 9.35348 16.1326 11.9238Z" fill="currentColor"/>
+                        <path d="M0 5.15625C2.14645 5.15625 4.29289 5.15625 6.50438 5.15625C6.50438 16.2731 6.50438 27.39 6.50438 38.8438C13.5086 38.8438 20.5128 38.8438 27.7292 38.8438C27.7292 40.5453 27.7292 42.2469 27.7292 44C18.5786 44 9.42793 44 0 44C0 31.1816 0 18.3631 0 5.15625Z" fill="currentColor"/>/>
+                        <path d="M40.845 23.3965C42.2563 24.4112 43.2474 25.4929 43.819 27.1562C44.1078 29.4371 44.2247 31.7848 42.792 33.6875C41.0489 35.4723 39.5587 36.4429 37.0365 36.5664C35.0263 36.5183 33.4644 35.9631 31.9964 34.5603C30.2844 32.5856 29.9705 31.1159 30.0173 28.5474C30.217 26.6163 30.9315 25.3315 32.2652 23.9551C35.0756 22.2234 37.8366 21.7183 40.845 23.3965Z" fill="currentColor"/>
+                        <path d="M29.7832 35.75C31.2386 36.3346 32.4854 36.9832 33.8284 37.7709C36.0681 38.9255 38.2794 38.6052 40.5989 37.8622C41.7567 37.3092 42.7757 36.4983 43.819 35.75C43.819 38.4725 43.819 41.195 43.819 44C42.0152 43.7988 40.5053 43.6186 38.791 43.2266C36.6934 42.8544 34.9832 43.2084 32.9418 43.7502C31.8372 44 31.8372 44 29.7832 44C29.7832 41.2775 29.7832 38.555 29.7832 35.75Z" fill="currentColor"/>
+                        <path d="M21.9095 12.2031C22.1858 12.1978 22.462 12.1925 22.7466 12.187C24.0579 12.1957 24.7704 12.2167 25.8571 12.998C26.5967 14.1042 26.5449 14.8556 26.3599 16.1562C25.6004 17.1556 25.155 17.4762 23.9635 17.875C21.7388 18.0426 19.6984 18.1822 17.8015 16.8438C17.2723 15.781 17.3586 14.9207 17.4591 13.75C18.6049 12.0166 20.0208 12.1668 21.9095 12.2031Z" fill="currentColor"/>
+                    </svg>
+                    <span>Adoções</span>
+                </a>
+            </li>
+            <li><a href="painel-tratamentos.html" class="nav-item"><img src="icone-tratamentos.svg"><span>Tratamentos</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN ===== -->
+    <main class="dashboard">
+        <!-- ===== CARDS SUPERIORES ===== -->
+        <section class="cards-row">
+            <div class="card">
+                <h3>Análise</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-analise">0</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Em Processo</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-em-processo" >0</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Adotados</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-adotados">0</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== INFO BOX ===== -->
+        <section class="info-box">
+
+            <!-- ===== BOTÕES DE AÇÃO ===== -->
+            <div class="action-buttons">
+                <button class="action-btn add" data-open-modal="modal-adicionar-adocao">
+                    <img src="icone-adicionar-adocoes.svg">
+                </button>
+                <button class="action-btn alter" data-open-modal="modal-alterar-adocao">
+                    <img src="icone-alterar.svg">
+                </button>
+                <button class="action-btn delete" data-open-modal="modal-excluir-adocao">
+                    <img src="icone-deletar.svg">
+                </button>
+            </div>
+
+            <div class="info-box-header">
+                <h2 class="info-title">Adoções</h2>
+
+                <div class="search-wrapper">
+                    <input id="searchInput" type="search" class="search-input" placeholder="Pesquisar por nome, ID, tutor...">
+                </div>
+            </div>
+
+            <!-- ===== TABELA ===== -->
+            <div class="info-table">
+                <div class="table-head grid-adocoes">
+                    <div>ID</div>
+                    <div>Animal</div>
+                    <div>Tutor</div>
+                    <div>Data</div>
+                    <div>Termo</div>
+                    <div>Status</div>
+                </div>
+
+                <!-- As linhas serão criadas por JS -->
+                <div id="adocoesRows"></div>
+            </div>
+
+        </section>
+    </main>
+
+
+    <!-- ===== MODAL ADICIONAR ===== -->
+    <div id="modal-adicionar-adocao" class="modal-overlay">
+        <div class="modal-box">
+
+            <button class="modal-close" data-close-modal="modal-adicionar-adocao">&times;</button>
+
+            <h2>Registrar Adoção</h2>
+
+            <form class="modal-form" data-form="add-adocao">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="add-animal">Animal</label>
+                        <input type="text" id="add-animal" placeholder="ID ou nome do animal">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-tutor">Tutor</label>
+                        <input type="text" id="add-tutor" placeholder="ID ou nome da pessoa">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="add-data">Data</label>
+                        <input type="date" id="add-data">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-status">Status</label>
+                        <select id="add-status">
+                            <option value="">Selecione</option>
+                            <option value="Análise">Análise</option>
+                            <option value="Em Processo">Em Processo</option>
+                            <option value="Adotado">Adotado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- CHECKBOX TERMO -->
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="add-termo" class="check-termo">
+                        Possui termo?
+                    </label>
+                </div>
+
+                <div class="form-footer">
+                    <button class="btn azul" data-submit-form="add-adocao">Cadastrar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ===== MODAL ALTERAR ===== -->
+    <div id="modal-alterar-adocao" class="modal-overlay">
+        <div class="modal-box">
+
+            <button class="modal-close" data-close-modal="modal-alterar-adocao">&times;</button>
+
+            <div class="id-top-alter">
+                <label for="alter-id-adocao">ID</label>
+                <input type="text" id="alter-id-adocao">
+            </div>
+
+            <h2>Alterar Adoção</h2>
+
+            <form class="modal-form" data-form="alter-adocao">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="alter-animal">Animal</label>
+                        <input type="text" id="alter-animal">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alter-tutor">Tutor</label>
+                        <input type="text" id="alter-tutor">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="alter-data">Data</label>
+                        <input type="date" id="alter-data">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alter-status">Status</label>
+                        <select id="alter-status">
+                            <option value="">Selecione</option>
+                            <option value="Análise">Análise</option>
+                            <option value="Em Processo">Em Processo</option>
+                            <option value="Adotado">Adotado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- CHECKBOX TERMO -->
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="alter-termo" class="check-termo">
+                        Possui termo?
+                    </label>
+                </div>
+
+                <div class="form-footer">
+                    <button class="btn verde" data-submit-form="alter-adocao">Alterar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ===== MODAL EXCLUIR ===== -->
+    <div id="modal-excluir-adocao" class="modal-overlay">
+        <div class="modal-box">
+
+            <button class="modal-close" data-close-modal="modal-excluir-adocao">&times;</button>
+
+            <h2>Excluir Adoção</h2>
+
+            <form class="modal-form" data-form="delete-adocao">
+                <div class="id-excluir">
+                    <label for="delete-id-adocao">ID</label>
+                    <input type="text" id="delete-id-adocao">
+                </div>
+
+                <div class="form-footer">
+                    <button class="btn vermelho" data-submit-form="delete-adocao">Deletar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- ALERTAS -->
+    <div id="alert-container"></div>
+
+    <script src="painel-adocoes.js"></script>
+</body>
+</html>
+

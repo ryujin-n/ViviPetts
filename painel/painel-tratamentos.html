@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - Tratamentos</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="painel-main.css">
+    <link rel="stylesheet" href="painel-tratamentos.css">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-solid.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-regular.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-light.css"/>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.1.0/css/duotone.css"/>
+</head>
+<body>
+    <!-- ===== SIDEBAR ===== -->
+    <nav class="sidebar">
+        <img src="logo.svg" alt="Logo" class="logo-sidebar"/>
+        <div class="logo-divider"></div>
+
+        <ul>
+            <li><a href="painel-home.html" class="nav-item"><img src="icone-home.svg"><span>Home</span></a></li>
+            <li><a href="painel-animais.html" class="nav-item"><img src="icone-animais.svg"><span>Animais</span></a></li>
+            <li><a href="painel-pessoas.html" class="nav-item"><img src="icone-pessoas.svg"><span>Pessoas</span></a></li>
+            <li><a href="painel-doacoes.html" class="nav-item"><img src="icone-doacoes.svg"><span>Doações</span></a></li>
+            <li><a href="painel-adocoes.html" class="nav-item"><img src="icone-adocoes.svg"><span>Adoções</span></a></li>
+            <li>
+                <a href="painel-tratamentos.html" class="nav-item active">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.8442 9.74961C21.7481 10.2555 21.0083 10.8445 20.1656 11.7282C19.7985 12.1104 19.7985 12.1104 19.424 12.5004C19.1638 12.7751 18.9035 13.0498 18.6354 13.3328C18.3659 13.6144 18.0965 13.8959 17.8189 14.186C16.9594 15.0848 16.1024 15.9862 15.2454 16.8876C14.6628 17.4978 14.0801 18.1078 13.4972 18.7176C12.0692 20.2123 10.6432 21.709 9.21878 23.2073C9.70469 24.3484 10.2705 25.1185 11.1193 25.9959C11.3641 26.2507 11.6088 26.5054 11.861 26.7679C12.1249 27.0389 12.3888 27.3098 12.6606 27.589C12.931 27.8695 13.2015 28.15 13.4801 28.439C14.3435 29.3338 15.2093 30.226 16.0752 31.1182C16.6612 31.7247 17.2472 32.3314 17.8329 32.9382C19.2686 34.4249 20.7063 35.9094 22.1454 37.3924C23.2415 36.8865 23.9813 36.2975 24.824 35.4138C25.0688 35.159 25.3135 34.9042 25.5656 34.6416C25.956 34.2296 25.956 34.2296 26.3542 33.8092C26.6237 33.5277 26.8931 33.2461 27.1707 32.9561C28.0302 32.0572 28.8872 31.1558 29.7442 30.2544C30.3268 29.6442 30.9095 29.0342 31.4924 28.4244C32.9204 26.9297 34.3464 25.433 35.7708 23.9347C35.2849 22.7936 34.7192 22.0235 33.8703 21.1461C33.5031 20.7639 33.5031 20.7639 33.1286 20.3741C32.8647 20.1031 32.6009 19.8322 32.329 19.553C32.0586 19.2725 31.7882 18.992 31.5095 18.703C30.6461 17.8082 29.7803 16.916 28.9145 16.0238C28.3284 15.4173 27.7425 14.8106 27.1567 14.2038C25.721 12.7171 24.2834 11.2326 22.8442 9.74961ZM21.0973 16.2966C21.6161 17.0168 21.6161 17.0168 22.1454 17.7515C21.2808 18.4716 21.2808 18.4716 20.3986 19.2064C20.0527 18.8463 19.7068 18.4862 19.3505 18.1152C19.6269 17.3878 19.6269 17.3878 20.0492 16.6603C20.3951 16.5403 20.741 16.4202 21.0973 16.2966ZM24.591 19.9338C25.0522 20.5339 25.5134 21.1341 25.9885 21.7524C25.1238 22.4726 25.1238 22.4726 24.2417 23.2073C23.7805 22.6071 23.3193 22.007 22.8442 21.3887C23.4206 20.9086 23.9971 20.4285 24.591 19.9338ZM17.2543 20.2975C17.7731 21.0177 17.7731 21.0177 18.3024 21.7524C17.9565 22.1125 17.6106 22.4726 17.2543 22.8436C16.7931 22.6035 16.3319 22.3635 15.8568 22.1161C15.8568 21.756 15.8568 21.396 15.8568 21.025C16.318 20.7849 16.7791 20.5448 17.2543 20.2975ZM29.0018 24.4803C29.1603 24.6604 29.3189 24.8404 29.4822 25.0259C29.2516 25.506 29.021 25.9861 28.7835 26.4808C28.3223 26.4808 27.8611 26.4808 27.386 26.4808C27.1554 26.0007 26.9248 25.5206 26.6872 25.0259C27.1676 24.4652 27.1676 24.4652 27.7353 23.9347C28.4773 23.8525 28.4773 23.8525 29.0018 24.4803ZM20.748 23.9347C21.2091 24.5349 21.6703 25.135 22.1454 25.7533C21.7996 26.1134 21.4537 26.4735 21.0973 26.8445C20.6362 26.6044 20.175 26.3644 19.6999 26.1171C19.6999 25.6369 19.6999 25.1568 19.6999 24.6622C20.0457 24.4221 20.3916 24.1821 20.748 23.9347ZM25.1587 28.4812C25.3173 28.6613 25.4758 28.8413 25.6391 29.0268C25.4085 29.5069 25.178 29.987 24.9404 30.4817C24.5945 30.4817 24.2486 30.4817 23.8923 30.4817C23.2965 29.7761 23.2965 29.7761 22.8442 29.0268C23.3245 28.4661 23.3245 28.4661 23.8923 27.9357C24.6342 27.8534 24.6342 27.8534 25.1587 28.4812Z" fill="currentColor"/>
+                        <path d="M37.2137 25.4727C36.3167 25.811 35.8613 26.2435 35.1829 26.9401C34.9371 27.1903 34.6912 27.4404 34.4379 27.6981C34.0459 28.1062 34.0459 28.1062 33.646 28.5224C33.3757 28.801 33.1054 29.0796 32.827 29.3667C32.2568 29.9563 31.6881 30.5474 31.1206 31.1398C30.2486 32.048 29.3693 32.9483 28.4894 33.8483C27.9369 34.4215 27.3848 34.9953 26.8333 35.5695C26.5684 35.8393 26.3035 36.1092 26.0306 36.3871C25.6701 36.7675 25.6701 36.7675 25.3023 37.1556C25.0885 37.3774 24.8747 37.5992 24.6545 37.8278C24.2417 38.4836 24.2417 38.4836 24.3246 39.2584C24.624 40.0227 24.9541 40.4625 25.5081 41.0509C25.696 41.2505 25.8839 41.4502 26.0775 41.6558C26.2787 41.8618 26.4799 42.0677 26.6872 42.2799C26.8914 42.491 27.0955 42.7021 27.3059 42.9196C28.8184 44.4426 30.333 45.6147 32.2771 46.4854C32.623 46.6655 32.623 46.6655 32.9759 46.8492C36.3491 47.111 38.9848 47.1161 41.6719 44.8331C43.5575 43.0308 44.7127 41.3255 44.9868 38.6427C45.1056 34.6198 44.4474 32.695 41.9503 29.7315C41.4069 29.1305 40.8611 28.5317 40.3126 27.9357C40.082 27.6684 39.8515 27.4012 39.6139 27.1258C39.4049 26.8904 39.196 26.6551 38.9807 26.4126C38.7983 26.2049 38.6159 25.9972 38.428 25.7832C37.867 25.3896 37.867 25.3896 37.2137 25.4727Z" fill="currentColor"/>
+                        <path d="M7.42646 25.4756C6.688 25.7896 6.26955 26.1368 5.70462 26.7209C5.51288 26.9183 5.32114 27.1158 5.12359 27.3192C4.92577 27.5301 4.72795 27.7411 4.52414 27.9584C4.32136 28.1721 4.11859 28.3859 3.90967 28.6061C1.25851 31.4562 0.0294075 33.8014 0.0252419 37.8414C0.0797844 40.6315 0.888889 42.1869 2.64628 44.2122C5.01757 46.493 7.36487 47.112 10.5685 46.9841C13.9277 46.5704 15.9499 44.5015 18.3024 42.1208C18.5586 41.8807 18.8149 41.6407 19.0789 41.3933C19.3054 41.1758 19.532 40.9582 19.7654 40.7341C19.9649 40.5442 20.1644 40.3543 20.3699 40.1587C20.748 39.5747 20.748 39.5747 20.6682 38.8945C20.3432 37.9607 19.9278 37.4866 19.2586 36.7803C19.0183 36.5244 18.7781 36.2684 18.5305 36.0048C18.2692 35.7327 18.0079 35.4606 17.7387 35.1802C17.3373 34.7582 17.3373 34.7582 16.9278 34.3276C16.3615 33.7341 15.7937 33.1419 15.2247 32.5512C14.3523 31.6433 13.4876 30.7279 12.6231 29.8118C12.0724 29.2366 11.5213 28.6619 10.9697 28.0877C10.7106 27.8119 10.4514 27.5361 10.1844 27.252C9.9408 27.0018 9.69723 26.7516 9.44627 26.4938C9.2332 26.2713 9.02013 26.0487 8.8006 25.8194C8.17068 25.3896 8.17068 25.3896 7.42646 25.4756Z" fill="currentColor"/>
+                        <path d="M4.00827 1.54741C2.18995 2.95477 0.615253 4.84623 0.135189 7.20356C-0.154682 10.7159 -0.162006 13.5176 2.03488 16.2739C3.00003 17.4064 4.00684 18.4905 5.02636 19.5701C5.26324 19.8223 5.50013 20.0746 5.7442 20.3345C6.19875 20.8122 6.65962 21.2835 7.12257 21.7524C8.21867 21.2465 8.95842 20.6575 9.80118 19.7738C10.0459 19.519 10.2906 19.2642 10.5427 19.0016C10.803 18.7269 11.0632 18.4522 11.3314 18.1692C11.6008 17.8876 11.8702 17.6061 12.1478 17.3161C13.0073 16.4172 13.8644 15.5158 14.7213 14.6144C15.3039 14.0042 15.8867 13.3942 16.4696 12.7844C17.8975 11.2897 19.3235 9.79302 20.748 8.29472C19.2973 5.17621 16.0338 1.88575 12.9663 0.538654C9.88528 -0.256354 6.77142 -0.14896 4.00827 1.54741Z" fill="currentColor"/>
+                        <path d="M30.4239 1.34424C28.1646 3.18498 26.2018 5.39374 24.2417 7.56728C24.7276 8.70841 25.2933 9.47854 26.1422 10.3559C26.387 10.6107 26.6317 10.8654 26.8839 11.1279C27.1478 11.3989 27.4116 11.6698 27.6835 11.949C27.9539 12.2295 28.2243 12.51 28.5029 12.799C29.3663 13.6938 30.2321 14.586 31.098 15.4782C31.6841 16.0847 32.27 16.6914 32.8558 17.2982C34.2915 18.7849 35.7291 20.2694 37.1683 21.7524C38.5736 21.077 39.5611 20.1142 40.6402 18.979C40.8265 18.7837 41.0129 18.5885 41.2049 18.3873C44.076 15.315 45.0117 12.8041 44.9732 8.51921C44.7433 5.97242 43.7246 4.04249 41.9285 2.31606C38.6608 -0.239007 34.082 -0.850454 30.4239 1.34424Z" fill="currentColor"/>
+                    </svg>
+                    <span>Tratamentos</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN ===== -->
+    <main class="dashboard">
+        <!-- ===== CARDS SUPERIORES ===== -->
+        <section class="cards-row">
+            <div class="card">
+                <h3>Tratamento</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-tratamento">0</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Observação</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-observacao">0</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Alta</h3>
+                <div class="card-content data-2">
+                    <span>Total</span>
+                    <p class="card-number" id="total-alta">0</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== INFO BOX ===== -->
+        <section class="info-box">
+
+            <!-- ===== BOTÕES DE AÇÃO ===== -->
+            <div class="action-buttons">
+                <button class="action-btn add" data-open-modal="modal-adicionar-tratamento">
+                    <img src="icone-adicionar.svg">
+                </button>
+                <button class="action-btn alter" data-open-modal="modal-alterar-tratamento">
+                    <img src="icone-alterar.svg">
+                </button>
+                <button class="action-btn delete" data-open-modal="modal-excluir-tratamento">
+                    <img src="icone-deletar.svg">
+                </button>
+            </div>
+
+            <div class="info-box-header">
+                <h2 class="info-title">Tratamentos</h2>
+
+                <div class="search-wrapper">
+                    <input id="searchInput" type="search" class="search-input" placeholder="Pesquisar por animal, ID, valor...">
+                </div>
+            </div>
+
+            <!-- ===== TABELA ===== -->
+            <div class="info-table">
+                <div class="table-head grid-tratamentos">
+                    <div>ID</div>
+                    <div>Animal</div>
+                    <div>Data</div>
+                    <div>Tipo</div>
+                    <div>Valor</div>
+                    <div>Status</div>
+                </div>
+
+                <div id="tratamentosRows"></div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- ===== MODAL ADICIONAR ===== -->
+    <div id="modal-adicionar-tratamento" class="modal-overlay">
+        <div class="modal-box">
+
+            <button class="modal-close" data-close-modal="modal-adicionar-tratamento">&times;</button>
+
+            <h2>Registrar Tratamento</h2>
+
+            <form class="modal-form" data-form="add-tratamento">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="add-animal">Animal</label>
+                        <input type="text" id="add-animal" placeholder="ID ou nome do animal">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-data">Data</label>
+                        <input type="date" id="add-data">
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="add-tipo">Tipo</label>
+                        <select id="add-tipo">
+                            <option value="">Selecione</option>
+                            <option value="Vacina">Vacina</option>
+                            <option value="FIV/FeLV">FIV/FeLV</option>
+                            <option value="Cirurgia">Cirurgia</option>
+                            <option value="Vermífugo">Vermífugo</option>
+                            <option value="Antipulgas">Antipulgas</option>
+                            <option value="Exames">Exames</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-valor">Valor</label>
+                        <input type="text" id="add-valor" placeholder="R$ 0,00">
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="add-status">Status</label>
+                    <select id="add-status">
+                        <option value="">Selecione</option>
+                        <option value="Observação">Observação</option>
+                        <option value="Tratamento">Tratamento</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                </div>
+
+                <div class="form-footer">
+                    <button class="btn azul" data-submit-form="add-tratamento">Cadastrar</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ===== MODAL ALTERAR ===== -->
+    <div id="modal-alterar-tratamento" class="modal-overlay">
+        <div class="modal-box">
+
+            <button class="modal-close" data-close-modal="modal-alterar-tratamento">&times;</button>
+
+            <div class="id-top-alter">
+                <label for="alter-id-tratamento">ID</label>
+                <input type="text" id="alter-id-tratamento">
+            </div>
+
+            <h2>Alterar Tratamento</h2>
+
+            <form class="modal-form" data-form="alter-tratamento">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="alter-animal">Animal</label>
+                        <input type="text" id="alter-animal">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alter-data">Data</label>
+                        <input type="date" id="alter-data">
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="alter-tipo">Tipo</label>
+                        <select id="alter-tipo">
+                            <option value="">Selecione</option>
+                            <option value="Vacina">Vacina</option>
+                            <option value="FIV/FeLV">FIV/FeLV</option>
+                            <option value="Cirurgia">Cirurgia</option>
+                            <option value="Vermífugo">Vermífugo</option>
+                            <option value="Antipulgas">Antipulgas</option>
+                            <option value="Exames">Exames</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alter-valor">Valor</label>
+                        <input type="text" id="alter-valor">
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="alter-status">Status</label>
+                    <select id="alter-status">
+                        <option value="">Selecione</option>
+                        <option value="Observação">Observação</option>
+                        <option value="Tratamento">Tratamento</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                </div>
+
+                <div class="form-footer">
+                    <button class="btn verde" data-submit-form="alter-tratamento">Alterar</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ===== MODAL EXCLUIR ===== -->
+    <div id="modal-excluir-tratamento" class="modal-overlay">
+        <div class="modal-box">
+
+            <button class="modal-close" data-close-modal="modal-excluir-tratamento">&times;</button>
+
+            <h2>Excluir Tratamento</h2>
+
+            <form class="modal-form" data-form="delete-tratamento">
+
+                <div class="id-excluir">
+                    <label for="delete-id-tratamento">ID</label>
+                    <input type="text" id="delete-id-tratamento">
+                </div>
+
+                <div class="form-footer">
+                    <button class="btn vermelho" data-submit-form="delete-tratamento">Deletar</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ALERTAS -->
+    <div id="alert-container"></div>
+
+    <script src="painel-tratamentos.js"></script>
+</body>
+
+</html>
