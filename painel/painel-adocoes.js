@@ -138,24 +138,29 @@ searchInput.addEventListener("input", () => {
 
 // ====== ADICIONAR ADOÇÃO ======
 function cadastrarAdocao() {
-    const animal = document.getElementById("add-animal").value.trim();
-    const tutor  = document.getElementById("add-tutor").value.trim();
-    const data   = document.getElementById("add-data").value.trim();
-    const status = document.getElementById("add-status").value.trim();
-    const termo  = document.getElementById("add-termo").checked;
+    try {
+        const animal = document.getElementById("add-animal").value.trim();
+        const tutor  = document.getElementById("add-tutor").value.trim();
+        const data   = document.getElementById("add-data").value.trim();
+        const status = document.getElementById("add-status").value.trim();
+        const termo  = document.getElementById("add-termo").checked;
 
-    if (!animal) return alerta("aviso", "Animal deve ser preenchido!");
-    if (!tutor) return alerta("aviso", "Tutor deve ser preenchido!");
-    if (!status) return alerta("aviso", "Status é obrigatório!");
-    if (!data) return alerta("aviso", "Data é obrigatória!");
+        if (!animal) return alerta("aviso", "Animal deve ser preenchido!");
+        if (!tutor) return alerta("aviso", "Tutor deve ser preenchido!");
+        if (!status) return alerta("aviso", "Status é obrigatório!");
+        if (!data) return alerta("aviso", "Data é obrigatória!");
 
-    const novoID = String(adocoesData.length + 1).padStart(3, "0");
+        const novoID = String(adocoesData.length + 1).padStart(3, "0");
 
-    adocoesData.push({ id: novoID, animal, tutor, data, termo, status });
+        adocoesData.push({ id: novoID, animal, tutor, data, termo, status });
 
-    fecharModal("modal-adicionar-adocao");
-    alerta("sucesso", "Adoção registrada!");
-    renderAdocoes();
+        fecharModal("modal-adicionar-adocao");
+        alerta("sucesso", "Adoção registrada!");
+        renderAdocoes();
+
+    } catch (e) {
+        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+    }
 }
 
 document.querySelector("[data-submit-form='add-adocao']")
@@ -181,20 +186,29 @@ document.getElementById("alter-id-adocao").addEventListener("keyup", e => {
 });
 
 function alterarAdocao() {
-    const id = document.getElementById("alter-id-adocao").value.trim();
-    const ado = adocoesData.find(a => a.id === id);
+    try {
+        const id = document.getElementById("alter-id-adocao").value.trim();
+        const ado = adocoesData.find(a => a.id === id);
 
-    if (!ado) return alerta("erro", "ID não encontrado!");
+        if (!ado) return alerta("erro", "ID não encontrado!");
 
-    ado.animal = document.getElementById("alter-animal").value.trim();
-    ado.tutor  = document.getElementById("alter-tutor").value.trim();
-    ado.data   = document.getElementById("alter-data").value.trim();
-    ado.status = document.getElementById("alter-status").value.trim();
-    ado.termo  = document.getElementById("alter-termo").checked;
+        const animal = document.getElementById("alter-animal").value.trim();
+        if (!animal)
+            return alerta("aviso", "Carregue a adoção antes de alterar (digite o ID e pressione ENTER).");
 
-    fecharModal("modal-alterar-adocao");
-    alerta("sucesso", "Adoção alterada!");
-    renderAdocoes();
+        ado.animal = animal;
+        ado.tutor  = document.getElementById("alter-tutor").value.trim();
+        ado.data   = document.getElementById("alter-data").value.trim();
+        ado.status = document.getElementById("alter-status").value.trim();
+        ado.termo  = document.getElementById("alter-termo").checked;
+
+        fecharModal("modal-alterar-adocao");
+        alerta("sucesso", "Adoção alterada!");
+        renderAdocoes();
+
+    } catch (e) {
+        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+    }
 }
 
 document.querySelector("[data-submit-form='alter-adocao']")
@@ -205,16 +219,22 @@ document.querySelector("[data-submit-form='alter-adocao']")
 
 // ====== EXCLUIR ADOÇÃO ======
 function excluirAdocao() {
-    const id = document.getElementById("delete-id-adocao").value.trim();
-    const index = adocoesData.findIndex(a => a.id === id);
+    try {
+        const id = document.getElementById("delete-id-adocao").value.trim();
+        const index = adocoesData.findIndex(a => a.id === id);
 
-    if (index === -1) return alerta("erro", "ID não encontrado!");
+        if (index === -1)
+            return alerta("erro", "ID não encontrado!");
 
-    adocoesData.splice(index, 1);
+        adocoesData.splice(index, 1);
 
-    fecharModal("modal-excluir-adocao");
-    alerta("sucesso", "Adoção excluída!");
-    renderAdocoes();
+        fecharModal("modal-excluir-adocao");
+        alerta("sucesso", "Adoção excluída!");
+        renderAdocoes();
+
+    } catch (e) {
+        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+    }
 }
 
 document.querySelector("[data-submit-form='delete-adocao']")
@@ -225,4 +245,5 @@ document.querySelector("[data-submit-form='delete-adocao']")
 
 // ====== RENDER INICIAL ======
 renderAdocoes();
+
 

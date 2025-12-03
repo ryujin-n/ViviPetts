@@ -27,7 +27,7 @@ document.querySelectorAll(".action-btn").forEach(btn => {
 document.querySelectorAll("[data-close-modal]").forEach(btn => {
     btn.addEventListener("click", () => {
         const modalId = btn.dataset.closeModal;
-        fecharModal(modalId);      ////
+        fecharModal(modalId);
     });
 });
 
@@ -57,7 +57,7 @@ function alerta(tipo, mensagem) {
 }
 
 // =========================
-// EXEMPLO(DELETAR DEPOIS)
+// EXEMPLO (DELETAR DEPOIS)
 // =========================
 let animalsData = [
     { id: "001", nome: "Felix Mario Matheus", especie: "Gato", sexo: "M", nascimento: "2020", resgate: "2023-01-05", microchip: "12345ABC", status: "Disponível", obs: "Fiv" },
@@ -100,7 +100,7 @@ function atualizarContadores() {
 
 // ====== BUSCA ======
 document.getElementById("searchInput").addEventListener("input", () => {
-    const t = searchInput.value.toLowerCase().trim();
+    const t = document.getElementById("searchInput").value.toLowerCase().trim();
 
     const filtrados = animalsData.filter(a =>
         a.id.toLowerCase().includes(t) ||
@@ -117,27 +117,31 @@ document.getElementById("searchInput").addEventListener("input", () => {
 
 // ====== ADICIONAR ANIMAL ======
 function cadastrarAnimal() {
-    const nome       = document.getElementById("add-nome").value.trim();
-    const sexo       = document.querySelector("input[name='add-sexo']:checked")?.value;
-    const especie    = document.getElementById("add-especie").value.trim();
-    const nascimento = document.getElementById("add-nascimento").value.trim();
-    const resgate    = document.getElementById("add-resgate").value.trim();
-    const microchip  = document.getElementById("add-microchip").value.trim();
-    const status     = document.getElementById("add-status").value.trim();
-    const obs        = document.getElementById("add-observacao").value.trim();
+    try {
+        const nome       = document.getElementById("add-nome").value.trim();
+        const sexo       = document.querySelector("input[name='add-sexo']:checked")?.value;
+        const especie    = document.getElementById("add-especie").value.trim();
+        const nascimento = document.getElementById("add-nascimento").value.trim();
+        const resgate    = document.getElementById("add-resgate").value.trim();
+        const microchip  = document.getElementById("add-microchip").value.trim();
+        const status     = document.getElementById("add-status").value.trim();
+        const obs        = document.getElementById("add-observacao").value.trim();
 
-    if (!nome) return alerta("aviso", "Nome deve ser preenchido!");
-    if (!sexo) return alerta("aviso", "Sexo deve ser selecionado!");
-    if (!especie) return alerta("aviso", "Espécie deve ser selecionada!");
-    if (!resgate) return alerta("aviso", "Data de resgate é obrigatória!");
+        if (!nome) return alerta("aviso", "Nome deve ser preenchido!");
+        if (!sexo) return alerta("aviso", "Sexo deve ser selecionado!");
+        if (!especie) return alerta("aviso", "Espécie deve ser selecionada!");
+        if (!resgate) return alerta("aviso", "Data de resgate é obrigatória!");
 
-    const novoID = String(animalsData.length + 1).padStart(3, "0");
+        const novoID = String(animalsData.length + 1).padStart(3, "0");
 
-    animalsData.push({ id: novoID, nome, especie, sexo, nascimento, resgate, microchip, status, obs });
+        animalsData.push({ id: novoID, nome, especie, sexo, nascimento, resgate, microchip, status, obs });
 
-    fecharModal("modal-adicionar-animal");
-    alerta("sucesso", "Animal cadastrado!");
-    renderAnimals();
+        fecharModal("modal-adicionar-animal");
+        alerta("sucesso", "Animal cadastrado!");
+        renderAnimals();
+    } catch (e) {
+        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+    }
 }
 
 document.querySelector("[data-submit-form='add-animal']").addEventListener("click", e => {
@@ -168,22 +172,33 @@ document.getElementById("alter-id").addEventListener("keyup", e => {
 });
 
 function alterarAnimal() {
-    const id = document.getElementById("alter-id").value.trim();
-    const animal = animalsData.find(a => a.id === id);
-    if (!animal) return alerta("erro", "ID não encontrado!");
+    try {
+        const id = document.getElementById("alter-id").value.trim();
+        const animal = animalsData.find(a => a.id === id);
 
-    animal.nome        = document.getElementById("alter-nome").value.trim();
-    animal.especie     = document.getElementById("alter-especie").value.trim();
-    animal.sexo        = document.querySelector("input[name='alter-sexo']:checked")?.value;
-    animal.nascimento  = document.getElementById("alter-nascimento").value.trim();
-    animal.resgate     = document.getElementById("alter-resgate").value.trim();
-    animal.microchip   = document.getElementById("alter-microchip").value.trim();
-    animal.status      = document.getElementById("alter-status").value.trim();
-    animal.obs         = document.getElementById("alter-observacao").value.trim();
+        if (!animal)
+            return alerta("erro", "ID não encontrado!");
 
-    fecharModal("modal-alterar-animal");
-    alerta("sucesso", "Animal alterado!");
-    renderAnimals();
+        const nome = document.getElementById("alter-nome").value.trim();
+        if (!nome)
+            return alerta("aviso", "Carregue um animal antes de alterar (digite o ID e pressione ENTER).");
+
+        animal.nome        = nome;
+        animal.especie     = document.getElementById("alter-especie").value.trim();
+        animal.sexo        = sexoAlter;
+        animal.nascimento  = document.getElementById("alter-nascimento").value.trim();
+        animal.resgate     = document.getElementById("alter-resgate").value.trim();
+        animal.microchip   = document.getElementById("alter-microchip").value.trim();
+        animal.status      = document.getElementById("alter-status").value.trim();
+        animal.obs         = document.getElementById("alter-observacao").value.trim();
+
+        fecharModal("modal-alterar-animal");
+        alerta("sucesso", "Animal alterado!");
+        renderAnimals();
+
+    } catch (e) {
+        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+    }
 }
 
 document.querySelector("[data-submit-form='alter-animal']").addEventListener("click", e => {
@@ -193,15 +208,21 @@ document.querySelector("[data-submit-form='alter-animal']").addEventListener("cl
 
 // ====== EXCLUIR ANIMAL ======
 function excluirAnimal() {
-    const id = document.getElementById("delete-id").value.trim();
-    const index = animalsData.findIndex(a => a.id === id);
-    if (index === -1) return alerta("erro", "ID não encontrado!");
+    try {
+        const id = document.getElementById("delete-id").value.trim();
+        const index = animalsData.findIndex(a => a.id === id);
 
-    animalsData.splice(index, 1);
+        if (index === -1)
+            return alerta("erro", "ID não encontrado!");
 
-    fecharModal("modal-excluir-animal");
-    alerta("sucesso", "Animal removido!");
-    renderAnimals();
+        animalsData.splice(index, 1);
+
+        fecharModal("modal-excluir-animal");
+        alerta("sucesso", "Animal removido!");
+        renderAnimals();
+    } catch (e) {
+        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+    }
 }
 
 document.querySelector("[data-submit-form='delete-animal']").addEventListener("click", e => {
@@ -211,3 +232,4 @@ document.querySelector("[data-submit-form='delete-animal']").addEventListener("c
 
 // ====== RENDER INICIAL ======
 renderAnimals();
+
