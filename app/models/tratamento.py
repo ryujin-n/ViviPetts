@@ -1,0 +1,23 @@
+from app.app import db
+
+class Tratamento(db.Model):
+    __tablename__ = 'tratamentos'
+
+    id = db.Column(db.Integer, primary_key=True)
+    animal_id = db.Column(db.Integer, db.ForeignKey('animais.id'), nullable=False)
+    data_tratamento = db.Column(db.String(20))
+    tipo_tratamento = db.Column(db.String(100))
+    valor_tratamento = db.Column(db.Float)
+    obs_tratamento = db.Column(db.Text)
+
+    animal = db.relationship('Animal', back_populates='tratamentos')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'animal_id': self.animal_id,
+            'data_tratamento': self.data_tratamento,
+            'tipo_tratamento': self.tipo_tratamento,
+            'valor_tratamento': self.valor_tratamento,
+            'obs_tratamento': self.obs_tratamento
+        }
