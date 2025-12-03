@@ -1,5 +1,3 @@
-// painel-doacoes.js
-
 // ====== FUNÇÕES DE MODAL ======
 function abrirModal(id) {
     const el = document.getElementById(id);
@@ -350,6 +348,7 @@ document.querySelectorAll("[data-submit-form]").forEach(btn => {
 
 // ====== RENDER INICIAL ======
 renderDonations();
+
 
 
 
