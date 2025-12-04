@@ -1,0 +1,190 @@
+/* ==== TABELA – GRID ADOÇÕES ==== */
+.grid-adocoes {
+    display: grid;
+    grid-template-columns:
+        1fr      /* ID */
+        2.5fr    /* Animal */
+        4fr      /* Tutor */
+        2fr      /* Data */
+        1.5fr      /* Termo */
+        2fr;     /* Status */
+}
+
+.table-head div:nth-child(5){
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* ==== MODAL - OVERLAY E BOX ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: #fff;
+    width: 520px;
+    padding: 25px;
+    border-radius: 12px;
+    position: relative;
+    animation: modalShow .25s ease-out;
+}
+
+@keyframes modalShow {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-box h2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* ===== CHECKBOX VISUAL ===== */
+#adocoesRows .check-termo {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #222;
+    border-radius: 3px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+#adocoesRows .check-termo:checked {
+    background: #000;
+    border-color: #000;
+}
+
+#adocoesRows .check-termo:checked::after {
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 4px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    border-radius: 1px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%) rotate(-45deg);
+    pointer-events: none;
+}
+
+/* ===== FORMULÁRIO ====== */
+.modal-form {
+    margin-top: 5px;
+}
+
+.form-row {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+input, select, textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+    height: 90px;
+}
+
+/* Rodapé do formulário */
+.form-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-footer button {
+    padding: 10px 22px;
+    background: #1976D2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* ===== ID do modal ALTERAR ===== */
+.id-top-alter {
+    position: absolute;
+    top: 20px;
+    right: 55px;
+    width: 90px;
+    display: flex;
+    flex-direction: column;
+}
+
+.id-top-alter label {
+    font-size: 13px;
+}
+
+.id-top-alter input {
+    width: 100%;
+    padding: 6px;
+    font-size: 13px;
+}
+
+/* ===== ID do modal EXCLUIR ===== */
+.id-excluir {
+    width: 120px;
+    margin-top: 10px;
+}
+
+.id-excluir label {
+    font-size: 14px;
+}
+
+.id-excluir input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+}

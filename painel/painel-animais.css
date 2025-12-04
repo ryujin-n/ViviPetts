@@ -1,0 +1,166 @@
+/* ==== TABELA – GRID ANIMAIS (somente nesta página) ==== */
+.grid-animais {
+    display: grid;
+    grid-template-columns:
+        1fr      /* ID */ 
+        3fr      /* Nome */ 
+        2fr    /* Espécie */ 
+        1.5fr    /* Sexo */ 
+        2.5fr    /* Nascimento */ 
+        2.5fr      /* Resgate */ 
+        2fr      /* Microchip */ 
+        2fr    /* Status */ 
+        3fr;     /* Obs */
+}
+
+/* ==== MODAL - OVERLAY E BOX ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: #fff;
+    width: 520px;
+    padding: 25px;
+    border-radius: 12px;
+    position: relative;
+    animation: modalShow .25s ease-out;
+}
+
+@keyframes modalShow {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.modal-box h2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* ===== FORMULÁRIO ====== */
+.modal-form {
+    margin-top: 5px;
+}
+
+.modal-form > .form-group {
+    margin-bottom: 18px;
+}
+
+.form-row {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+input, select, textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+    height: 90px;
+}
+
+/* Radio Buttons */
+.radio-group label {
+    margin-right: 12px;
+    font-size: 14px;
+}
+
+/* Rodapé do formulário */
+.form-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-footer button {
+    padding: 10px 22px;
+    background: #1976D2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* ===== ID do modal Alterar ===== */
+.id-top-alter {
+    position: absolute;
+    top: 20px;        
+    right: 55px;
+    width: 90px;
+    display: flex;
+    flex-direction: column;
+}
+
+.id-top-alter label {
+    font-size: 13px;
+}
+
+.id-top-alter input {
+    width: 100%;
+    padding: 6px;
+    font-size: 13px;
+}
+
+/* ===== ID do modal EXCLUIR ===== */
+.id-excluir {
+    width: 120px;
+    margin-top: 10px;
+}
+
+.id-excluir label {
+    font-size: 14px;
+}
+
+.id-excluir input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+}
+
+
+
