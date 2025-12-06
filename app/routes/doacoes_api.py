@@ -9,6 +9,11 @@ def listar_doacoes():
     doacoes = Doacao.query.all()
     return jsonify([d.to_dict() for d in doacoes])
 
+@doacoes_bp.route('/<int:id>', methods=['GET'])
+def buscar_doacao(id):
+    doacao = Doacao.query.get_or_404(id)
+    return jsonify(doacao.to_dict())
+
 @doacoes_bp.route('/', methods=['POST'])
 def criar_doacao():
     data = request.get_json() or request.form
