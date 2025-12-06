@@ -9,7 +9,7 @@ adocoes_bp = Blueprint('adocoes_bp', __name__)
 def listar_adocoes():
     adocoes = Adocao.query.all()
     return jsonify([a.to_dict() for a in adocoes])
-
+    
 @adocoes_bp.route('/', methods=['POST'])
 def criar_adocao():
     data = request.get_json() or request.form
@@ -27,26 +27,28 @@ def criar_adocao():
     db.session.add(adocao)
     db.session.commit()
     return jsonify(adocao.to_dict()), 201
-
+    
 @adocoes_bp.route('/<int:id>', methods=['PUT'])
 def atualizar_adocao(id):
     data = request.get_json() or request.form
     adocao = Adocao.query.get_or_404(id)
-
     adocao.animal_id = data.get('animal_id', adocao.animal_id)
-    adocao.adotante_id = data.get('adotante_id', adocao.adotante_id)
+    adocao.pessoa_id = data.get('pessoa_id', adocao.pessoa_id)
     adocao.data_adocao = data.get('data_adocao', adocao.data_adocao)
     adocao.status = data.get('status', adocao.status)
+    adocao.termo = data.get('termo', adocao.termo)
+    adocao.obs = data.get('obs', adocao.obs)
 
     db.session.commit()
-
     return jsonify(adocao.to_dict())
-
 
 @adocoes_bp.route('/<int:id>', methods=['DELETE'])
 def deletar_adocao(id):
     adocao = Adocao.query.get_or_404(id)
-    # opcional: atualizar status do animal ao remover adoção
+    animal = Animal.query.get(adocao.animal_id)
+    if animal:
+        animal.status = 'Disponível'
     db.session.delete(adocao)
     db.session.commit()
-    return jsonify({'message':'Adoção deletada'})
+
+    return jsonify({'message': 'Adoção deletada'})
