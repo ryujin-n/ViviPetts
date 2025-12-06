@@ -25,10 +25,7 @@ document.querySelectorAll(".action-btn").forEach(btn => {
 });
 
 document.querySelectorAll("[data-close-modal]").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const modalId = btn.dataset.closeModal;
-        fecharModal(modalId);
-    });
+    btn.addEventListener("click", () => fecharModal(btn.dataset.closeModal));
 });
 
 // ===== SISTEMA DE ALERTAs =====
@@ -36,53 +33,73 @@ function alerta(tipo, mensagem) {
     const container = document.getElementById("alert-container");
     if (!container) return;
 
-    let classe = "";
-    let icone = "";
+    const classes = {
+        sucesso: "alert-success",
+        aviso: "alert-warning",
+        erro: "alert-error"
+    };
 
-    if (tipo === "sucesso") { classe = "alert-success"; icone = "icone-sucesso.svg"; }
-    if (tipo === "aviso")    { classe = "alert-warning"; icone = "icone-alerta.svg"; }
-    if (tipo === "erro")     { classe = "alert-error"; icone = "icone-erro.svg"; }
+    const icones = {
+        sucesso: "icone-sucesso.svg",
+        aviso: "icone-alerta.svg",
+        erro: "icone-erro.svg"
+    };
 
     const alerta = document.createElement("div");
-    alerta.className = "alert-box " + classe;
+    alerta.className = "alert-box " + classes[tipo];
+
     alerta.innerHTML = `
-        <img src="${icone}">
+        <img src="${icones[tipo]}">
         <span>${mensagem}</span>
         <button class="alert-close">×</button>
     `;
 
     alerta.querySelector(".alert-close").addEventListener("click", () => alerta.remove());
+
     container.appendChild(alerta);
     setTimeout(() => alerta.remove(), 3500);
 }
 
-// =========================
-// EXEMPLO (DELETAR DEPOIS)
-// =========================
-let animalsData = [
-    { id: "001", nome: "Felix Mario Matheus", especie: "Gato", sexo: "M", nascimento: "2020", resgate: "2023-01-05", microchip: "12345ABC", status: "Disponível", obs: "Fiv" },
-    { id: "002", nome: "Luna", especie: "Cachorro", sexo: "F", nascimento: "2021-03", resgate: "2023-04-12", microchip: "78910XYZ", status: "Adotado", obs: "Nenhuma doença" }
-];
+// ======================
+// VARIÁVEIS
+// ======================
+const API = "http://127.0.0.1:5000/api/animais"; // ajuste para o seu backend
+let animalsData = []; // Agora será preenchido pelo backend
+
+// ======================
+// BUSCAR LISTA DO BACKEND
+// ======================
+async function carregarAnimais() {
+    try {
+        const res = await fetch(API + "/");
+        animalsData = await res.json();
+        renderAnimals(animalsData);
+    } catch (err) {
+        alerta("erro", "Falha ao carregar animais do servidor.");
+    }
+}
 
 // ====== RENDERIZAÇÃO ======
-function renderAnimals(lista = animalsData) {
+function renderAnimals(lista) {
     const container = document.getElementById("animalsRows");
-    container.innerHTML = "";
+    container.textContent = "";
 
     lista.forEach(a => {
         const row = document.createElement("div");
         row.classList.add("table-row", "grid-animais");
+
         row.innerHTML = `
             <div>${a.id}</div>
             <div>${a.nome}</div>
             <div>${a.especie}</div>
             <div>${a.sexo}</div>
             <div>${a.nascimento || "-"}</div>
-            <div>${a.resgate}</div>
-            <div>${a.microchip}</div>
+            <div>${a.resgate || "-"}</div>
+            <div>${a.microchip || "-"}</div>
             <div>${a.status}</div>
-            <div>${a.obs}</div>
+            <div>${a.obs || "-"}</div>
         `;
+
         container.appendChild(row);
     });
 
@@ -91,145 +108,151 @@ function renderAnimals(lista = animalsData) {
 
 // ====== CONTADORES ======
 function atualizarContadores() {
-    document.getElementById("total-gatos").textContent      = animalsData.filter(a => a.especie === "Gato").length;
-    document.getElementById("total-cachorros").textContent  = animalsData.filter(a => a.especie === "Cachorro").length;
-    document.getElementById("total-animais").textContent    = animalsData.length;
-    document.getElementById("total-disponiveis").textContent= animalsData.filter(a => a.status === "Disponível").length;
-    document.getElementById("total-adotados").textContent   = animalsData.filter(a => a.status === "Adotado").length;
+    document.getElementById("total-gatos").textContent       = animalsData.filter(a => a.especie === "Gato").length;
+    document.getElementById("total-cachorros").textContent   = animalsData.filter(a => a.especie === "Cachorro").length;
+    document.getElementById("total-animais").textContent     = animalsData.length;
+    document.getElementById("total-disponiveis").textContent = animalsData.filter(a => a.status === "Disponível").length;
+    document.getElementById("total-adotados").textContent    = animalsData.filter(a => a.status === "Adotado").length;
 }
 
 // ====== BUSCA ======
 document.getElementById("searchInput").addEventListener("input", () => {
-    const t = document.getElementById("searchInput").value.toLowerCase().trim();
+    const txt = document.getElementById("searchInput").value.toLowerCase().trim();
 
     const filtrados = animalsData.filter(a =>
-        a.id.toLowerCase().includes(t) ||
-        a.nome.toLowerCase().includes(t) ||
-        a.microchip.toLowerCase().includes(t) ||
-        a.especie.toLowerCase().includes(t.replace("gat", "gato").replace("cach", "cachorro")) ||
-        a.status.toLowerCase().includes(t) ||
-        (t.includes("macho") && a.sexo === "M") ||
-        (t.includes("fêmea") && a.sexo === "F")
+        a.nome.toLowerCase().includes(txt) ||
+        a.id.toString().includes(txt) ||
+        a.microchip?.toLowerCase().includes(txt) ||
+        a.especie.toLowerCase().includes(txt) ||
+        a.status.toLowerCase().includes(txt)
     );
 
     renderAnimals(filtrados);
 });
 
 // ====== ADICIONAR ANIMAL ======
-function cadastrarAnimal() {
+async function cadastrarAnimal() {
+    const nome       = document.getElementById("add-nome").value.trim();
+    const sexo       = document.querySelector("input[name='add-sexo']:checked")?.value;
+    const especie    = document.getElementById("add-especie").value.trim();
+    const nascimento = document.getElementById("add-nascimento").value.trim();
+    const resgate    = document.getElementById("add-resgate").value.trim();
+    const microchip  = document.getElementById("add-microchip").value.trim();
+    const status     = document.getElementById("add-status").value.trim();
+    const obs        = document.getElementById("add-obs").value.trim();
+
+    if (!nome) return alerta("aviso", "Nome é obrigatório!");
+    if (!sexo) return alerta("aviso", "Sexo é obrigatório!");
+    if (!especie) return alerta("aviso", "Espécie é obrigatória!");
+    if (!resgate) return alerta("aviso", "Data de resgate é obrigatória!");
+
     try {
-        const nome       = document.getElementById("add-nome").value.trim();
-        const sexo       = document.querySelector("input[name='add-sexo']:checked")?.value;
-        const especie    = document.getElementById("add-especie").value.trim();
-        const nascimento = document.getElementById("add-nascimento").value.trim();
-        const resgate    = document.getElementById("add-resgate").value.trim();
-        const microchip  = document.getElementById("add-microchip").value.trim();
-        const status     = document.getElementById("add-status").value.trim();
-        const obs        = document.getElementById("add-observacao").value.trim();
+        const res = await fetch(API + "/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, sexo, especie, nascimento, resgate, microchip, status, obs })
+        });
 
-        if (!nome) return alerta("aviso", "Nome deve ser preenchido!");
-        if (!sexo) return alerta("aviso", "Sexo deve ser selecionado!");
-        if (!especie) return alerta("aviso", "Espécie deve ser selecionada!");
-        if (!resgate) return alerta("aviso", "Data de resgate é obrigatória!");
+        if (!res.ok) throw new Error();
 
-        const novoID = String(animalsData.length + 1).padStart(3, "0");
-
-        animalsData.push({ id: novoID, nome, especie, sexo, nascimento, resgate, microchip, status, obs });
-
-        fecharModal("modal-adicionar-animal");
         alerta("sucesso", "Animal cadastrado!");
-        renderAnimals();
-    } catch (e) {
-        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+        fecharModal("modal-adicionar-animal");
+        carregarAnimais();
+    } catch (err) {
+        alerta("erro", "Falha ao cadastrar.");
     }
 }
 
-document.querySelector("[data-submit-form='add-animal']").addEventListener("click", e => {
-    e.preventDefault();
-    cadastrarAnimal();
-});
+document.querySelector("[data-submit-form='add-animal']")
+    .addEventListener("click", cadastrarAnimal);
 
-// ====== ALTERAR ANIMAL ======
-document.getElementById("alter-id").addEventListener("keyup", e => {
+
+// ====== CARREGAR ALTERAR ANIMAL ======
+document.getElementById("alter-id").addEventListener("keyup", async e => {
     if (e.key !== "Enter") return;
 
     const id = e.target.value.trim();
-    const animal = animalsData.find(a => a.id === id);
+    if (!id) return;
 
-    if (!animal) return alerta("erro", "ID não encontrado!");
+    try {
+        const res = await fetch(API + "/" + id);
+        if (!res.ok) return alerta("erro", "ID não encontrado!");
 
-    document.getElementById("alter-nome").value        = animal.nome;
-    document.getElementById("alter-especie").value     = animal.especie;
-    document.getElementById("alter-nascimento").value  = animal.nascimento;
-    document.getElementById("alter-resgate").value     = animal.resgate;
-    document.getElementById("alter-microchip").value   = animal.microchip;
-    document.getElementById("alter-status").value      = animal.status;
-    document.getElementById("alter-observacao").value  = animal.obs;
+        const animal = await res.json();
 
-    document.querySelectorAll("input[name='alter-sexo']").forEach(r =>
-        r.checked = r.value === animal.sexo
-    );
+        document.getElementById("alter-nome").value        = animal.nome;
+        document.getElementById("alter-especie").value     = animal.especie;
+        document.getElementById("alter-nascimento").value  = animal.nascimento;
+        document.getElementById("alter-resgate").value     = animal.resgate;
+        document.getElementById("alter-microchip").value   = animal.microchip;
+        document.getElementById("alter-status").value      = animal.status;
+        document.getElementById("alter-obs").value         = animal.obs;
+
+        document.querySelectorAll("input[name='alter-sexo']").forEach(r =>
+            r.checked = r.value === animal.sexo
+        );
+    } catch {
+        alerta("erro", "Erro ao buscar animal.");
+    }
 });
 
-function alterarAnimal() {
+// ====== ALTERAR ANIMAL ======
+async function alterarAnimal() {
+    const id = document.getElementById("alter-id").value.trim();
+    if (!id) return alerta("aviso", "Informe um ID válido.");
+
+    const nome       = document.getElementById("alter-nome").value.trim();
+    const sexo       = document.querySelector("input[name='alter-sexo']:checked")?.value;
+    const especie    = document.getElementById("alter-especie").value.trim();
+    const nascimento = document.getElementById("alter-nascimento").value.trim();
+    const resgate    = document.getElementById("alter-resgate").value.trim();
+    const microchip  = document.getElementById("alter-microchip").value.trim();
+    const status     = document.getElementById("alter-status").value.trim();
+    const obs        = document.getElementById("alter-obs").value.trim();
+
     try {
-        const id = document.getElementById("alter-id").value.trim();
-        const animal = animalsData.find(a => a.id === id);
+        const res = await fetch(API + "/" + id, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, sexo, especie, nascimento, resgate, microchip, status, obs })
+        });
 
-        if (!animal)
-            return alerta("erro", "ID não encontrado!");
+        if (!res.ok) throw new Error();
 
-        const nome = document.getElementById("alter-nome").value.trim();
-        if (!nome)
-            return alerta("aviso", "Carregue um animal antes de alterar (digite o ID e pressione ENTER).");
-
-        animal.nome        = nome;
-        animal.especie     = document.getElementById("alter-especie").value.trim();
-        animal.sexo        = sexoAlter;
-        animal.nascimento  = document.getElementById("alter-nascimento").value.trim();
-        animal.resgate     = document.getElementById("alter-resgate").value.trim();
-        animal.microchip   = document.getElementById("alter-microchip").value.trim();
-        animal.status      = document.getElementById("alter-status").value.trim();
-        animal.obs         = document.getElementById("alter-observacao").value.trim();
-
-        fecharModal("modal-alterar-animal");
         alerta("sucesso", "Animal alterado!");
-        renderAnimals();
-
-    } catch (e) {
-        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+        fecharModal("modal-alterar-animal");
+        carregarAnimais();
+    } catch {
+        alerta("erro", "Falha ao alterar.");
     }
 }
 
-document.querySelector("[data-submit-form='alter-animal']").addEventListener("click", e => {
-    e.preventDefault();
-    alterarAnimal();
-});
+document.querySelector("[data-submit-form='alter-animal']")
+    .addEventListener("click", alterarAnimal);
 
 // ====== EXCLUIR ANIMAL ======
-function excluirAnimal() {
+async function excluirAnimal() {
+    const id = document.getElementById("delete-id").value.trim();
+    if (!id) return alerta("aviso", "Informe um ID válido.");
+
     try {
-        const id = document.getElementById("delete-id").value.trim();
-        const index = animalsData.findIndex(a => a.id === id);
+        const res = await fetch(API + "/" + id, {
+            method: "DELETE"
+        });
 
-        if (index === -1)
-            return alerta("erro", "ID não encontrado!");
+        if (!res.ok) throw new Error();
 
-        animalsData.splice(index, 1);
-
-        fecharModal("modal-excluir-animal");
         alerta("sucesso", "Animal removido!");
-        renderAnimals();
-    } catch (e) {
-        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+        fecharModal("modal-excluir-animal");
+        carregarAnimais();
+    } catch {
+        alerta("erro", "Falha ao deletar.");
     }
 }
 
-document.querySelector("[data-submit-form='delete-animal']").addEventListener("click", e => {
-    e.preventDefault();
-    excluirAnimal();
-});
+document.querySelector("[data-submit-form='delete-animal']")
+    .addEventListener("click", excluirAnimal);
 
 // ====== RENDER INICIAL ======
-renderAnimals();
+carregarAnimais();
 
