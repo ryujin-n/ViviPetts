@@ -8,7 +8,7 @@ class Tratamento(db.Model):
     data_tratamento = db.Column(db.String(20))
     tipo_tratamento = db.Column(db.String(100))
     valor_tratamento = db.Column(db.Float)
-    obs_tratamento = db.Column(db.Text)
+    status_tratamento = db.Column(db.String(50))   # <--- trocado para status_tratamento
 
     animal = db.relationship('Animal', back_populates='tratamentos')
 
@@ -19,5 +19,5 @@ class Tratamento(db.Model):
             'data_tratamento': self.data_tratamento,
             'tipo_tratamento': self.tipo_tratamento,
             'valor_tratamento': self.valor_tratamento,
-            'obs_tratamento': self.obs_tratamento
+            'status_tratamento': self.status_tratamento
         }
