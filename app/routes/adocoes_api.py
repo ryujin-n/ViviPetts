@@ -19,14 +19,13 @@ def obter_adocao(id):
 def criar_adocao():
     data = request.get_json() or request.form
     animal = Animal.query.get_or_404(data.get('animal_id'))
-    animal.status = data.get('status_animal', 'Adotado')
+    animal.status = data.get('status_adocao')  
     adocao = Adocao(
         animal_id=data.get('animal_id'),
         pessoa_id=data.get('pessoa_id'),
         data_adocao=data.get('data_adocao'),
         termo=data.get('termo'),
-        status=data.get('status'),
-        obs=data.get('obs')
+        status_adocao=data.get('status_adocao')
     )
 
     db.session.add(adocao)
@@ -41,10 +40,12 @@ def atualizar_adocao(id):
     adocao.animal_id = data.get('animal_id', adocao.animal_id)
     adocao.pessoa_id = data.get('pessoa_id', adocao.pessoa_id)
     adocao.data_adocao = data.get('data_adocao', adocao.data_adocao)
-    adocao.status = data.get('status', adocao.status)
+    adocao.status_adocao = data.get('status_adocao', adocao.status_adocao)
     adocao.termo = data.get('termo', adocao.termo)
-    adocao.obs = data.get('obs', adocao.obs)
 
+    animal = Animal.query.get(adocao.animal_id)
+    if animal:
+        animal.status = adocao.status_adocao
     db.session.commit()
     return jsonify(adocao.to_dict())
 
