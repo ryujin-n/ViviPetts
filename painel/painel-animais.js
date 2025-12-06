@@ -63,7 +63,7 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "http://127.0.0.1:5500/ViviPets/painel-pessoas.html"; // ajuste para o seu backend
+const API = "http://127.0.0.1:5000/api/animais"; // ajuste para o seu backend
 let animalsData = []; // Agora será preenchido pelo backend
 
 // ======================
