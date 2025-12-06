@@ -28,6 +28,21 @@ def criar_adocao():
     db.session.commit()
     return jsonify(adocao.to_dict()), 201
 
+@adocoes_bp.route('/<int:id>', methods=['PUT'])
+def atualizar_adocao(id):
+    data = request.get_json() or request.form
+    adocao = Adocao.query.get_or_404(id)
+
+    adocao.animal_id = data.get('animal_id', adocao.animal_id)
+    adocao.adotante_id = data.get('adotante_id', adocao.adotante_id)
+    adocao.data_adocao = data.get('data_adocao', adocao.data_adocao)
+    adocao.status = data.get('status', adocao.status)
+
+    db.session.commit()
+
+    return jsonify(adocao.to_dict())
+
+
 @adocoes_bp.route('/<int:id>', methods=['DELETE'])
 def deletar_adocao(id):
     adocao = Adocao.query.get_or_404(id)
