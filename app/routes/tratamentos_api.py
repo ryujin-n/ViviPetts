@@ -9,6 +9,11 @@ def listar_tratamentos():
     tratamentos = Tratamento.query.all()
     return jsonify([t.to_dict() for t in tratamentos])
 
+@tratamentos_bp.route('/<int:id>', methods=['GET'])
+def buscar_tratamento(id):
+    tratamento = Tratamento.query.get_or_404(id)
+    return jsonify(tratamento.to_dict())
+    
 @tratamentos_bp.route('/', methods=['POST'])
 def criar_tratamento():
     data = request.get_json() or request.form
