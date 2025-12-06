@@ -7,7 +7,7 @@ class Adocao(db.Model):
     animal_id = db.Column(db.Integer, db.ForeignKey('animais.id'), nullable=False)
     pessoa_id = db.Column(db.Integer, db.ForeignKey('pessoas.id'), nullable=False)
     data_adocao = db.Column(db.String(20))
-    termo = db.Column(db.String(200))
+    termo = db.Column(db.Boolean, default=False)
     status = db.Column(db.String(50))
     obs = db.Column(db.String(200))
 
