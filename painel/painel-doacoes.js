@@ -62,8 +62,8 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS / CONFIG
 // ======================
-const API = "http://127.0.0.1:5000/api/doacoes";// ajuste para o seu backend
-let donationsData = []; // Agora será preenchido pelo backend
+const API = "http://127.0.0.1:5000/api/doacoes";
+let donationsData = []; 
 
 // ====== HELPERS DE VALOR ======
 function parseNumber(valor) {

@@ -68,9 +68,8 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "http://127.0.0.1:5000/api/adocoes"; // ajuste para o seu backend
-let adocoesData = []; // Agora será preenchido pelo backend
-
+const API = "http://127.0.0.1:5000/api/adocoes";
+let adocoesData = [];
 
 // ======================
 // BUSCAR LISTA DO BACKEND
