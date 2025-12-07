@@ -10,7 +10,7 @@
         2.5fr      /* Resgate */ 
         2fr      /* Microchip */ 
         2fr    /* Status */ 
-        3fr;     /* Obs */
+        3.5fr;     /* Obs */
 }
 
 /* ==== MODAL - OVERLAY E BOX ===== */
@@ -161,6 +161,3 @@ textarea {
     padding: 8px;
     font-size: 14px;
 }
-
-
-

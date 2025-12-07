@@ -17,8 +17,8 @@ document.querySelectorAll(".action-btn").forEach(btn => {
 
     btn.addEventListener("click", () => {
         abrirModal(modalId);
+
         const box = document.getElementById(modalId).querySelector(".modal-box");
-        if (!box) return;
         if (modalId.includes("alterar")) box.style.maxWidth = "520px";
         if (modalId.includes("excluir")) box.style.maxWidth = "400px";
     });
@@ -49,23 +49,27 @@ function alerta(tipo, mensagem) {
     alertaEl.className = "alert-box " + (classes[tipo] || classes.aviso);
 
     alertaEl.innerHTML = `
-        <img src="${icones[tipo] || icones.aviso}" alt="${tipo}">
+        <img src="${icones[tipo] || icones.aviso}">
         <span>${mensagem}</span>
-        <button class="alert-close" aria-label="fechar alerta">×</button>
+        <button class="alert-close">×</button>
     `;
 
-    alertaEl.querySelector(".alert-close").addEventListener("click", () => alertaEl.remove());
+    alertaEl
+        .querySelector(".alert-close")
+        .addEventListener("click", () => alertaEl.remove());
+
     container.appendChild(alertaEl);
     setTimeout(() => alertaEl.remove(), 3500);
 }
 
 // ======================
-// VARIÁVEIS / CONFIG
+// VARIÁVEIS
 // ======================
-const API = "/api/doacoes";
-let donationsData = []; 
+const API = "http://127.0.0.1:5000/api/doacoes";
+let donationsData = [];
+let doacaoCarregada = false;
 
-// ====== HELPERS DE VALOR ======
+// ====== HELPERS ======
 function parseNumber(valor) {
     if (valor === null || valor === undefined) return NaN;
     const m = String(valor).trim().match(/-?\d+[\d.,]*/);
@@ -74,43 +78,36 @@ function parseNumber(valor) {
 
 function formatValorPorTipo(tipo, valor) {
     if (valor === null || valor === undefined || valor === "") return "-";
-    if (typeof valor === "number") {
-        if (String(tipo).toLowerCase() === "dinheiro") return "R$ " + valor.toFixed(2);
-        if (String(tipo).toLowerCase() === "ração" || String(tipo).toLowerCase() === "racao")
-            return Number.isInteger(valor) ? `${valor} Kg` : `${valor.toFixed(1)} Kg`;
-        return String(valor);
-    }
 
-    const n = parseNumber(valor);
+    const n = typeof valor === "number" ? valor : parseNumber(valor);
+
     if (!isNaN(n)) {
-        if (String(tipo).toLowerCase() === "dinheiro") return "R$ " + n.toFixed(2);
-        if (String(tipo).toLowerCase() === "ração" || String(tipo).toLowerCase() === "racao")
+        if (String(tipo).toLowerCase() === "dinheiro")
+            return "R$ " + n.toFixed(2);
+
+        if (["ração", "racao"].includes(String(tipo).toLowerCase()))
             return Number.isInteger(n) ? `${n} Kg` : `${n.toFixed(1)} Kg`;
-        return String(valor);
     }
 
     return String(valor);
 }
 
 // ======================
-// BUSCAR LISTA DO BACKEND
+// BUSCAR DO BACKEND
 // ======================
 async function carregarDoacoes() {
     try {
         const res = await fetch(API + "/");
-        if (!res.ok) throw new Error("Falha ao buscar doações");
         donationsData = await res.json();
         renderDonations(donationsData);
-    } catch (err) {
-        console.error(err);
-        alerta("erro", "Falha ao carregar doações do servidor.");
+    } catch {
+        alerta("erro", "Erro ao carregar doações.");
     }
 }
 
-// ====== RENDERIZAÇÃO ======
+// ====== RENDER ======
 function renderDonations(lista = []) {
     const container = document.getElementById("donationsRows");
-    if (!container) return;
     container.textContent = "";
 
     lista.forEach(d => {
@@ -124,10 +121,11 @@ function renderDonations(lista = []) {
         }
 
         const valorText = formatValorPorTipo(d.tipo_doacao, d.valor_doacao);
+        const nomePessoa = d.pessoa_nome || `ID ${d.pessoa_id}`;
 
         row.innerHTML = `
             <div>${d.id}</div>
-            <div>${d.pessoa_id ?? "-"}</div>
+            <div>${nomePessoa}</div>
             <div>${dataText}</div>
             <div>${d.tipo_doacao ?? "-"}</div>
             <div>${valorText}</div>
@@ -151,224 +149,153 @@ function atualizarContadoresDoacoes() {
         return acc;
     }, 0);
 
-    const elTotalValor = document.getElementById("total-valor");
-    if (elTotalValor) elTotalValor.textContent = "R$ " + totalDinheiro.toFixed(2);
-
-    const totalRacao = donationsData.reduce((acc, d) => {
-        if (["ração", "racao"].includes(String(d.tipo_doacao || "").toLowerCase())) {
-            const n = parseNumber(d.valor_doacao);
-            return acc + (isNaN(n) ? 0 : n);
-        }
-        return acc;
-    }, 0);
-
-    const elTotalRacao = document.getElementById("total-racao");
-    if (elTotalRacao) {
-        elTotalRacao.textContent =
-            totalRacao === 0
-                ? "0 Kg"
-                : (Number.isInteger(totalRacao) ? `${totalRacao}` : totalRacao.toFixed(1)) + " Kg";
-    }
+    document.getElementById("total-valor").textContent =
+        "R$ " + totalDinheiro.toFixed(2);
 }
 
-// ====== DOAÇÃO MAIS RECENTE ======
+// ====== MAIS RECENTE ======
 function atualizarRecentes() {
-    const elDonor = document.getElementById("recent-donor");
-    const elDate  = document.getElementById("recent-date");
-    const elValue = document.getElementById("recent-value");
-    if (!elDonor || !elDate || !elValue) return;
-
-    if (!donationsData || donationsData.length === 0) {
-        elDonor.textContent = "—";
-        elDate.textContent  = "—";
-        elValue.textContent = "—";
-        return;
-    }
+    if (!donationsData.length) return;
 
     const last = donationsData[donationsData.length - 1];
+    document.getElementById("recent-donor").textContent =
+        last.pessoa_nome || `ID ${last.pessoa_id}`;
 
-    elDonor.textContent = last.pessoa_id ?? "—";
-    if (last.data_doacao && /^\d{4}-\d{2}-\d{2}$/.test(last.data_doacao)) {
-        const p = last.data_doacao.split("-");
-        elDate.textContent = `${p[2]}/${p[1]}/${p[0]}`;
-    } else {
-        elDate.textContent = last.data_doacao || "—";
-    }
-    elValue.textContent = formatValorPorTipo(last.tipo_doacao, last.valor_doacao);
+    document.getElementById("recent-value").textContent =
+        formatValorPorTipo(last.tipo_doacao, last.valor_doacao);
 }
 
 // ====== BUSCA ======
-const searchEl = document.getElementById("searchInput");
-if (searchEl) {
-    searchEl.addEventListener("input", () => {
-        const t = searchEl.value.toLowerCase().trim();
-        const filtrados = donationsData.filter(d =>
-            String(d.id || "").toLowerCase().includes(t) ||
-            String(d.pessoa_id || "").toLowerCase().includes(t) ||
-            String(d.tipo_doacao || "").toLowerCase().includes(t) ||
-            String(d.obs_doacao || "").toLowerCase().includes(t) ||
-            String(d.data_doacao || "").toLowerCase().includes(t) ||
-            String(d.valor_doacao || "").toLowerCase().includes(t)
-        );
-        renderDonations(filtrados);
-    });
-}
+document.getElementById("searchInput")?.addEventListener("input", e => {
+    const t = e.target.value.toLowerCase();
+
+    const filtrados = donationsData.filter(d =>
+        Object.values(d).join(" ").toLowerCase().includes(t)
+    );
+
+    renderDonations(filtrados);
+});
 
 // ====== ADICIONAR DOAÇÃO ======
-async function cadastrarDoacao() {
+async function cadastrarDoacao(e) {
+    e.preventDefault();
+
+    const pessoaId = document.getElementById("add-id-pessoa").value.trim();
+    const tipo     = document.getElementById("add-tipo-doacao").value.trim();
+
+    if (!pessoaId) return alerta("aviso", "Informe a pessoa!");
+    if (!tipo)     return alerta("aviso", "Informe o tipo da doação!");
+
+    const payload = {
+        pessoa_id: parseInt(pessoaId),
+        data_doacao: document.getElementById("add-data-doacao").value || null,
+        tipo_doacao: tipo,
+        valor_doacao: parseNumber(document.getElementById("add-valor-doacao").value),
+        obs_doacao: document.getElementById("add-obs-doacao").value || null
+    };
+
     try {
-        const pessoa_id = document.getElementById("add-nome-doacao").value.trim(); 
-        const data = document.getElementById("add-data-doacao").value;
-        const tipo = document.getElementById("add-tipo-doacao").value.trim();
-        const valorRaw = document.getElementById("add-valor-doacao").value.trim();
-        const obs = document.getElementById("add-obs-doacao").value.trim();
-
-        if (!pessoa_id) return alerta("aviso", "ID da pessoa é obrigatório!");
-        if (!tipo) return alerta("aviso", "Tipo obrigatório!");
-
-        const payload = {
-            pessoa_id: parseInt(pessoa_id, 10),
-            data_doacao: data || null,
-            tipo_doacao: tipo,
-            valor_doacao: (valorRaw === "" ? null : (() => {
-                const num = parseNumber(valorRaw);
-                return isNaN(num) ? valorRaw : num;
-            })()),
-            obs_doacao: obs || null
-        };
-
         const res = await fetch(API + "/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         });
 
-        if (!res.ok) throw new Error("Falha ao cadastrar doação.");
+        if (!res.ok) throw new Error();
 
         alerta("sucesso", "Doação cadastrada!");
         fecharModal("modal-adicionar-doacao");
-        await carregarDoacoes();
-    } catch (err) {
-        console.error(err);
-        alerta("erro", err.message || "Ocorreu um erro ao cadastrar.");
+        carregarDoacoes();
+    } catch {
+        alerta("erro", "Falha ao cadastrar.");
     }
 }
 
-document.querySelectorAll("[data-submit-form='add-doacao']").forEach(btn => {
-    btn.addEventListener("click", e => {
-        e.preventDefault();
-        cadastrarDoacao();
-    });
+document.querySelector("[data-submit-form='add-doacao']")
+    .addEventListener("click", cadastrarDoacao);
+
+// ====== CARREGAR PARA ALTERAR  ======
+document.getElementById("alter-id-doacao").addEventListener("keyup", async e => {
+    if (e.key !== "Enter") return;
+
+    const id = e.target.value.trim();
+    if (!id) return alerta("aviso", "Informe um ID!");
+
+    try {
+        const res = await fetch(API + "/" + id);
+        if (!res.ok) return alerta("erro", "ID não encontrado!");
+
+        const d = await res.json();
+        doacaoCarregada = true;
+
+        document.getElementById("alter-id-pessoa").value   = d.pessoa_id ?? "";
+        document.getElementById("alter-data-doacao").value = d.data_doacao || "";
+        document.getElementById("alter-tipo-doacao").value = d.tipo_doacao || "";
+        document.getElementById("alter-valor-doacao").value = d.valor_doacao ?? "";
+        document.getElementById("alter-obs-doacao").value  = d.obs_doacao || "";
+
+        alerta("sucesso", "Doação carregada para alteração.");
+    } catch {
+        alerta("erro", "Erro ao buscar doação.");
+    }
 });
 
-// ====== CARREGAR PARA ALTERAR ======
-const alterInput = document.getElementById("alter-id-doacao");
-if (alterInput) {
-    alterInput.addEventListener("keyup", async e => {
-        if (e.key !== "Enter") return;
-        const id = e.target.value.trim();
-        if (!id) return;
-
-        try {
-            const res = await fetch(API + "/" + id);
-            if (!res.ok) return alerta("erro", "ID não encontrado!");
-            const d = await res.json();
-
-            document.getElementById("alter-nome-doacao").value = d.pessoa_id ?? "";
-            if (d.data_doacao && /^\d{4}-\d{2}-\d{2}$/.test(d.data_doacao)) {
-                document.getElementById("alter-data-doacao").value = d.data_doacao;
-            } else {
-                document.getElementById("alter-data-doacao").value = d.data_doacao || "";
-            }
-            document.getElementById("alter-tipo-doacao").value = d.tipo_doacao || "";
-            document.getElementById("alter-valor-doacao").value = (d.valor_doacao === null || d.valor_doacao === undefined) ? "" : String(d.valor_doacao);
-            document.getElementById("alter-obs-doacao").value = d.obs_doacao || "";
-        } catch (err) {
-            console.error(err);
-            alerta("erro", "Erro ao buscar doação.");
-        }
-    });
-}
-
 // ====== ALTERAR DOAÇÃO ======
-async function alterarDoacao() {
+async function alterarDoacao(e) {
+    e.preventDefault();
+
+    if (!doacaoCarregada)
+        return alerta("aviso", "Carregue a doação pelo ID (ENTER) antes de alterar.");
+
+    const id = document.getElementById("alter-id-doacao").value.trim();
+
+    const payload = {
+        pessoa_id: parseInt(document.getElementById("alter-id-pessoa").value),
+        data_doacao: document.getElementById("alter-data-doacao").value || null,
+        tipo_doacao: document.getElementById("alter-tipo-doacao").value,
+        valor_doacao: parseNumber(document.getElementById("alter-valor-doacao").value),
+        obs_doacao: document.getElementById("alter-obs-doacao").value || null
+    };
+
     try {
-        const id = document.getElementById("alter-id-doacao").value.trim();
-        if (!id) return alerta("aviso", "Informe um ID válido.");
-
-        const pessoa_id = parseInt(document.getElementById("alter-nome-doacao").value.trim(), 10);
-        const data = document.getElementById("alter-data-doacao").value;
-        const tipo = document.getElementById("alter-tipo-doacao").value.trim();
-        const valorRaw = document.getElementById("alter-valor-doacao").value.trim();
-        const obs = document.getElementById("alter-obs-doacao").value.trim();
-
-        if (!pessoa_id) return alerta("aviso", "ID da pessoa é obrigatório!");
-
-        const payload = {
-            pessoa_id: pessoa_id,
-            data_doacao: data || null,
-            tipo_doacao: tipo,
-            valor_doacao: (valorRaw === "" ? null : (() => {
-                const num = parseNumber(valorRaw);
-                return isNaN(num) ? valorRaw : num;
-            })()),
-            obs_doacao: obs || null
-        };
-
         const res = await fetch(API + "/" + id, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         });
 
-        if (!res.ok) throw new Error("Falha ao alterar doação.");
+        if (!res.ok) throw new Error();
 
         alerta("sucesso", "Doação alterada!");
+        doacaoCarregada = false;
         fecharModal("modal-alterar-doacao");
-        await carregarDoacoes();
-    } catch (err) {
-        console.error(err);
-        alerta("erro", err.message || "Ocorreu um erro ao alterar.");
+        carregarDoacoes();
+    } catch {
+        alerta("erro", "Falha ao alterar.");
     }
 }
 
-document.querySelectorAll("[data-submit-form='alter-doacao']").forEach(btn => {
-    btn.addEventListener("click", e => {
-        e.preventDefault();
-        alterarDoacao();
-    });
-});
+document.querySelector("[data-submit-form='alter-doacao']")
+    .addEventListener("click", alterarDoacao);
 
 // ====== EXCLUIR DOAÇÃO ======
-async function excluirDoacao() {
-    try {
-        const id = document.getElementById("delete-id-doacao").value.trim();
-        if (!id) return alerta("aviso", "Informe um ID válido.");
+async function excluirDoacao(e) {
+    e.preventDefault();
 
+    const id = document.getElementById("delete-id-doacao").value.trim();
+    if (!id) return alerta("aviso", "Informe um ID válido.");
+
+    try {
         const res = await fetch(API + "/" + id, { method: "DELETE" });
-        if (!res.ok) throw new Error("Falha ao deletar doação.");
+        if (!res.ok) throw new Error();
 
         alerta("sucesso", "Doação deletada!");
         fecharModal("modal-excluir-doacao");
-        await carregarDoacoes();
-    } catch (err) {
-        console.error(err);
-        alerta("erro", err.message || "Ocorreu um erro ao deletar.");
+        carregarDoacoes();
+    } catch {
+        alerta("erro", "Falha ao deletar.");
     }
 }
 
-document.querySelectorAll("[data-submit-form='delete-doacao']").forEach(btn => {
-    btn.addEventListener("click", e => {
-        e.preventDefault();
-        excluirDoacao();
-    });
-});
-
-// ====== RENDER INICIAL ======
+// ====== INICIAL ======
 carregarDoacoes();
-
-
-
-
-
-

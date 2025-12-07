@@ -68,8 +68,9 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "/api/adocoes";
+const API = "http://127.0.0.1:5000/api/adocoes";
 let adocoesData = [];
+let adocaoCarregada = false; 
 
 // ======================
 // BUSCAR LISTA DO BACKEND
@@ -95,21 +96,71 @@ function renderAdocoes(lista) {
         const row = document.createElement("div");
         row.classList.add("table-row", "grid-adocoes");
 
-        const termoText = a.termo ? "Sim" : "Não";
+        const animalNome = a.animal_nome || `ID ${a.animal_id}`;
+        const pessoaNome = a.pessoa_nome || `ID ${a.pessoa_id}`;
 
         row.innerHTML = `
             <div>${a.id}</div>
-            <div>${a.animal_id ?? "-"}</div>
-            <div>${a.pessoa_id ?? "-"}</div>
+            <div>${animalNome}</div>
+            <div>${pessoaNome}</div>
             <div>${a.data_adocao || "-"}</div>
-            <div>${termoText}</div>
+
+            <div>
+                <input 
+                    type="checkbox" 
+                    class="check-termo"
+                    data-id="${a.id}"
+                    ${a.termo ? "checked" : ""}
+                >
+            </div>
+
             <div>${a.status_adocao || "-"}</div>
         `;
 
         container.appendChild(row);
     });
 
+    ativarCheckboxes();
     atualizarContadores();
+}
+
+// ====== CHECKBOX DA TABELA  ======
+function ativarCheckboxes() {
+    document.querySelectorAll("#adocoesRows .check-termo").forEach(cb => {
+        cb.onchange = async () => {
+            const id = cb.dataset.id;
+            const novoValor = cb.checked;
+
+            const adocao = adocoesData.find(a => a.id == id);
+            if (!adocao) return alerta("erro", "Adoção não encontrada!");
+
+            const payload = {
+                animal_id: adocao.animal_id,
+                pessoa_id: adocao.pessoa_id,
+                data_adocao: adocao.data_adocao,
+                status_adocao: adocao.status_adocao,
+                termo: novoValor
+            };
+
+            try {
+                const res = await fetch(API + "/" + id, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) throw new Error();
+
+                alerta("sucesso", novoValor ? "Termo marcado!" : "Termo desmarcado!");
+                carregarAdocoes();
+
+            } catch (err) {
+                alerta("erro", "Falha ao atualizar no servidor.");
+                cb.checked = !novoValor;
+                console.error(err);
+            }
+        };
+    });
 }
 
 // ====== CONTADORES ======
@@ -133,7 +184,9 @@ if (searchInput) {
 
         const filtrados = adocoesData.filter(a =>
             a.id.toString().includes(t) ||
+            (a.animal_nome || "").toLowerCase().includes(t) ||
             a.animal_id.toString().includes(t) ||
+            (a.pessoa_nome || "").toLowerCase().includes(t) ||
             a.pessoa_id.toString().includes(t) ||
             (a.status_adocao || "").toLowerCase().includes(t) ||
             (a.data_adocao || "").toLowerCase().includes(t)
@@ -182,16 +235,14 @@ async function cadastrarAdocao() {
     }
 }
 
-document
-    .querySelector("[data-submit-form='add-adocao']")
+document.querySelector("[data-submit-form='add-adocao']")
     .addEventListener("click", e => {
         e.preventDefault();
         cadastrarAdocao();
     });
 
-// ====== CARREGAR ADOÇÃO NO MODAL ALTERAR ======
-document
-    .getElementById("alter-id-adocao")
+// ====== CARREGAR PARA ALTERAR ======
+document.getElementById("alter-id-adocao")
     .addEventListener("keyup", async e => {
 
         if (e.key !== "Enter") return;
@@ -210,23 +261,38 @@ document
             document.getElementById("alter-status").value = ado.status_adocao;
             document.getElementById("alter-termo").checked = ado.termo;
 
+            adocaoCarregada = true; 
+
         } catch (err) {
             alerta("erro", "Erro ao buscar adoção.");
             console.error(err);
         }
     });
 
-// ====== ALTERAR ADOÇÃO ======
+// ====== ALTERAR ADOÇÃO  ======
 async function alterarAdocao() {
     const id = document.getElementById("alter-id-adocao").value.trim();
 
-    if (!id) return alerta("aviso", "Informe um ID válido.");
+    if (!id) return alerta("aviso", "Informe um ID válido!");
+
+    if (!adocaoCarregada)
+        return alerta("aviso", "Carregue a adoção primeiro (digite o ID e pressione ENTER).");
+
+    const animal = document.getElementById("alter-animal").value.trim();
+    const tutor  = document.getElementById("alter-tutor").value.trim();
+    const data   = document.getElementById("alter-data").value.trim();
+    const status = document.getElementById("alter-status").value.trim();
+
+    if (!animal) return alerta("aviso", "Animal não pode ficar vazio!");
+    if (!tutor)  return alerta("aviso", "Tutor não pode ficar vazio!");
+    if (!data)   return alerta("aviso", "Data é obrigatória!");
+    if (!status) return alerta("aviso", "Status é obrigatório!");
 
     const payload = {
-        animal_id: parseInt(document.getElementById("alter-animal").value),
-        pessoa_id: parseInt(document.getElementById("alter-tutor").value),
-        data_adocao: document.getElementById("alter-data").value,
-        status_adocao: document.getElementById("alter-status").value,
+        animal_id: parseInt(animal),
+        pessoa_id: parseInt(tutor),
+        data_adocao: data,
+        status_adocao: status,
         termo: document.getElementById("alter-termo").checked
     };
 
@@ -241,6 +307,7 @@ async function alterarAdocao() {
 
         alerta("sucesso", "Adoção alterada!");
         fecharModal("modal-alterar-adocao");
+        adocaoCarregada = false;
         carregarAdocoes();
     } catch (err) {
         alerta("erro", err.message);
@@ -248,8 +315,7 @@ async function alterarAdocao() {
     }
 }
 
-document
-    .querySelector("[data-submit-form='alter-adocao']")
+document.querySelector("[data-submit-form='alter-adocao']")
     .addEventListener("click", e => {
         e.preventDefault();
         alterarAdocao();
@@ -275,8 +341,7 @@ async function excluirAdocao() {
     }
 }
 
-document
-    .querySelector("[data-submit-form='delete-adocao']")
+document.querySelector("[data-submit-form='delete-adocao']")
     .addEventListener("click", e => {
         e.preventDefault();
         excluirAdocao();
@@ -284,4 +349,3 @@ document
 
 // ====== RENDER INICIAL ======
 carregarAdocoes();
-

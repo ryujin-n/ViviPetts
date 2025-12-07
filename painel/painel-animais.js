@@ -55,16 +55,17 @@ function alerta(tipo, mensagem) {
     `;
 
     alerta.querySelector(".alert-close").addEventListener("click", () => alerta.remove());
-
     container.appendChild(alerta);
+
     setTimeout(() => alerta.remove(), 3500);
 }
 
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "/api/animais"; 
-let animalsData = []; 
+const API = "http://127.0.0.1:5000/api/animais"; 
+let animalsData = [];
+let animalCarregadoAlterar = false;
 
 // ======================
 // BUSCAR LISTA DO BACKEND
@@ -74,8 +75,8 @@ async function carregarAnimais() {
         const res = await fetch(API + "/");
         animalsData = await res.json();
         renderAnimals(animalsData);
-    } catch (err) {
-        alerta("erro", "Falha ao carregar animais do servidor.");
+    } catch {
+        alerta("erro", "Falha ao carregar animais.");
     }
 }
 
@@ -132,25 +133,28 @@ document.getElementById("searchInput").addEventListener("input", () => {
 
 // ====== ADICIONAR ANIMAL ======
 async function cadastrarAnimal() {
-    const nome       = document.getElementById("add-nome").value.trim();
-    const sexo       = document.querySelector("input[name='add-sexo']:checked")?.value;
-    const especie    = document.getElementById("add-especie").value.trim();
-    const nascimento = document.getElementById("add-nascimento").value.trim();
-    const resgate    = document.getElementById("add-resgate").value.trim();
-    const microchip  = document.getElementById("add-microchip").value.trim();
-    const status     = document.getElementById("add-status").value.trim();
-    const obs        = document.getElementById("add-obs").value.trim();
+    const nome = document.getElementById("add-nome").value.trim();
+    const sexo = document.querySelector("input[name='add-sexo']:checked")?.value;
+    const especie = document.getElementById("add-especie").value.trim();
+    const resgate = document.getElementById("add-resgate").value.trim();
 
-    if (!nome) return alerta("aviso", "Nome é obrigatório!");
-    if (!sexo) return alerta("aviso", "Sexo é obrigatório!");
-    if (!especie) return alerta("aviso", "Espécie é obrigatória!");
-    if (!resgate) return alerta("aviso", "Data de resgate é obrigatória!");
+    if (!nome || !sexo || !especie || !resgate)
+        return alerta("aviso", "Preencha todos os campos obrigatórios!");
 
     try {
         const res = await fetch(API + "/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, sexo, especie, nascimento, resgate, microchip, status, obs })
+            body: JSON.stringify({
+                nome,
+                sexo,
+                especie,
+                nascimento: document.getElementById("add-nascimento").value.trim(),
+                resgate,
+                microchip: document.getElementById("add-microchip").value.trim(),
+                status: document.getElementById("add-status").value.trim(),
+                obs: document.getElementById("add-obs").value.trim()
+            })
         });
 
         if (!res.ok) throw new Error();
@@ -158,7 +162,7 @@ async function cadastrarAnimal() {
         alerta("sucesso", "Animal cadastrado!");
         fecharModal("modal-adicionar-animal");
         carregarAnimais();
-    } catch (err) {
+    } catch {
         alerta("erro", "Falha ao cadastrar.");
     }
 }
@@ -166,19 +170,19 @@ async function cadastrarAnimal() {
 document.querySelector("[data-submit-form='add-animal']")
     .addEventListener("click", cadastrarAnimal);
 
-
-// ====== CARREGAR ALTERAR ANIMAL ======
+// ====== CARREGAR PARA ALTERAR  ======
 document.getElementById("alter-id").addEventListener("keyup", async e => {
     if (e.key !== "Enter") return;
 
     const id = e.target.value.trim();
-    if (!id) return;
+    if (!id) return alerta("aviso", "Informe um ID!");
 
     try {
         const res = await fetch(API + "/" + id);
         if (!res.ok) return alerta("erro", "ID não encontrado!");
 
         const animal = await res.json();
+        animalCarregadoAlterar = true;
 
         document.getElementById("alter-nome").value        = animal.nome;
         document.getElementById("alter-especie").value     = animal.especie;
@@ -191,35 +195,40 @@ document.getElementById("alter-id").addEventListener("keyup", async e => {
         document.querySelectorAll("input[name='alter-sexo']").forEach(r =>
             r.checked = r.value === animal.sexo
         );
+
+        alerta("sucesso", "Animal carregado para alteração.");
     } catch {
         alerta("erro", "Erro ao buscar animal.");
     }
 });
 
-// ====== ALTERAR ANIMAL ======
+// ====== ALTERAR ANIMAL  ======
 async function alterarAnimal() {
-    const id = document.getElementById("alter-id").value.trim();
-    if (!id) return alerta("aviso", "Informe um ID válido.");
+    if (!animalCarregadoAlterar)
+        return alerta("aviso", "Carregue o animal pelo ID (ENTER) antes de alterar!");
 
-    const nome       = document.getElementById("alter-nome").value.trim();
-    const sexo       = document.querySelector("input[name='alter-sexo']:checked")?.value;
-    const especie    = document.getElementById("alter-especie").value.trim();
-    const nascimento = document.getElementById("alter-nascimento").value.trim();
-    const resgate    = document.getElementById("alter-resgate").value.trim();
-    const microchip  = document.getElementById("alter-microchip").value.trim();
-    const status     = document.getElementById("alter-status").value.trim();
-    const obs        = document.getElementById("alter-obs").value.trim();
+    const id = document.getElementById("alter-id").value.trim();
 
     try {
         const res = await fetch(API + "/" + id, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, sexo, especie, nascimento, resgate, microchip, status, obs })
+            body: JSON.stringify({
+                nome: document.getElementById("alter-nome").value.trim(),
+                sexo: document.querySelector("input[name='alter-sexo']:checked")?.value,
+                especie: document.getElementById("alter-especie").value.trim(),
+                nascimento: document.getElementById("alter-nascimento").value.trim(),
+                resgate: document.getElementById("alter-resgate").value.trim(),
+                microchip: document.getElementById("alter-microchip").value.trim(),
+                status: document.getElementById("alter-status").value.trim(),
+                obs: document.getElementById("alter-obs").value.trim()
+            })
         });
 
         if (!res.ok) throw new Error();
 
         alerta("sucesso", "Animal alterado!");
+        animalCarregadoAlterar = false;
         fecharModal("modal-alterar-animal");
         carregarAnimais();
     } catch {
@@ -230,16 +239,13 @@ async function alterarAnimal() {
 document.querySelector("[data-submit-form='alter-animal']")
     .addEventListener("click", alterarAnimal);
 
-// ====== EXCLUIR ANIMAL ======
+// ====== EXCLUIR ANIMAL  ======
 async function excluirAnimal() {
     const id = document.getElementById("delete-id").value.trim();
     if (!id) return alerta("aviso", "Informe um ID válido.");
 
     try {
-        const res = await fetch(API + "/" + id, {
-            method: "DELETE"
-        });
-
+        const res = await fetch(API + "/" + id, { method: "DELETE" });
         if (!res.ok) throw new Error();
 
         alerta("sucesso", "Animal removido!");
@@ -255,5 +261,3 @@ document.querySelector("[data-submit-form='delete-animal']")
 
 // ====== RENDER INICIAL ======
 carregarAnimais();
-
-

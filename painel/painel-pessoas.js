@@ -28,7 +28,7 @@ document.querySelectorAll("[data-close-modal]").forEach(btn => {
     btn.addEventListener("click", () => fecharModal(btn.dataset.closeModal));
 });
 
-// ===== SISTEMA DE ALERTAS =====
+// ===== SISTEMA DE ALERTAS (PADRÃO) =====
 function alerta(tipo, mensagem) {
     const container = document.getElementById("alert-container");
     if (!container) return;
@@ -45,26 +45,29 @@ function alerta(tipo, mensagem) {
         erro: "icone-erro.svg"
     };
 
-    const alerta = document.createElement("div");
-    alerta.className = "alert-box " + classes[tipo];
+    const alertaEl = document.createElement("div");
+    alertaEl.className = "alert-box " + (classes[tipo] || classes.aviso);
 
-    alerta.innerHTML = `
-        <img src="${icones[tipo]}">
+    alertaEl.innerHTML = `
+        <img src="${icones[tipo] || icones.aviso}">
         <span>${mensagem}</span>
         <button class="alert-close">×</button>
     `;
 
-    alerta.querySelector(".alert-close").addEventListener("click", () => alerta.remove());
+    alertaEl
+        .querySelector(".alert-close")
+        .addEventListener("click", () => alertaEl.remove());
 
-    container.appendChild(alerta);
-    setTimeout(() => alerta.remove(), 3500);
+    container.appendChild(alertaEl);
+    setTimeout(() => alertaEl.remove(), 3500);
 }
 
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "/api/pessoas"; 
+const API = "http://127.0.0.1:5000/api/pessoas"; 
 let pessoasData = []; 
+let pessoaCarregada = false;
 
 // ======================
 // BUSCAR LISTA DO BACKEND
@@ -74,8 +77,8 @@ async function carregarPessoas() {
         const res = await fetch(API + "/");
         pessoasData = await res.json();
         renderPessoas(pessoasData);
-    } catch (err) {
-        alerta("erro", "Falha ao carregar pessoas do servidor.");
+    } catch {
+        alerta("erro", "Falha ao carregar pessoas.");
     }
 }
 
@@ -127,7 +130,9 @@ document.getElementById("searchInput").addEventListener("input", () => {
 });
 
 // ====== ADICIONAR PESSOA ======
-async function cadastrarPessoa() {
+async function cadastrarPessoa(e) {
+    e.preventDefault();
+
     const nome     = document.getElementById("add-nome").value.trim();
     const telefone = document.getElementById("add-telefone").value.trim();
     const email    = document.getElementById("add-email").value.trim();
@@ -149,7 +154,7 @@ async function cadastrarPessoa() {
         alerta("sucesso", "Pessoa cadastrada!");
         fecharModal("modal-adicionar-pessoa");
         carregarPessoas();
-    } catch (err) {
+    } catch {
         alerta("erro", "Falha ao cadastrar.");
     }
 }
@@ -157,18 +162,19 @@ async function cadastrarPessoa() {
 document.querySelector("[data-submit-form='add-person']")
     .addEventListener("click", cadastrarPessoa);
 
-// ====== CARREGAR ALTERAR PESSOA ======
+// ====== CARREGAR PARA ALTERAR  ======
 document.getElementById("alter-id").addEventListener("keyup", async e => {
     if (e.key !== "Enter") return;
 
     const id = e.target.value.trim();
-    if (!id) return;
+    if (!id) return alerta("aviso", "Informe um ID!");
 
     try {
         const res = await fetch(API + "/" + id);
         if (!res.ok) return alerta("erro", "ID não encontrado!");
 
         const p = await res.json();
+        pessoaCarregada = true;
 
         document.getElementById("alter-nome").value     = p.nome;
         document.getElementById("alter-telefone").value = p.telefone;
@@ -177,34 +183,39 @@ document.getElementById("alter-id").addEventListener("keyup", async e => {
         document.getElementById("alter-tipo").value     = p.tipo;
         document.getElementById("alter-status").value   = p.status;
 
+        alerta("sucesso", "Pessoa carregada para alteração.");
     } catch {
         alerta("erro", "Erro ao buscar pessoa.");
     }
 });
 
+// ====== ALTERAR PESSOA  ======
+async function alterarPessoa(e) {
+    e.preventDefault();
 
-// ====== ALTERAR PESSOA ======
-async function alterarPessoa() {
+    if (!pessoaCarregada)
+        return alerta("aviso", "Carregue a pessoa pelo ID (ENTER) antes de alterar.");
+
     const id = document.getElementById("alter-id").value.trim();
-    if (!id) return alerta("aviso", "Informe um ID válido.");
-
-    const nome     = document.getElementById("alter-nome").value.trim();
-    const telefone = document.getElementById("alter-telefone").value.trim();
-    const email    = document.getElementById("alter-email").value.trim();
-    const data     = document.getElementById("alter-data").value.trim();
-    const tipo     = document.getElementById("alter-tipo").value.trim();
-    const status   = document.getElementById("alter-status").value.trim();
 
     try {
         const res = await fetch(API + "/" + id, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, telefone, email, data, tipo, status })
+            body: JSON.stringify({
+                nome: document.getElementById("alter-nome").value.trim(),
+                telefone: document.getElementById("alter-telefone").value.trim(),
+                email: document.getElementById("alter-email").value.trim(),
+                data: document.getElementById("alter-data").value.trim(),
+                tipo: document.getElementById("alter-tipo").value.trim(),
+                status: document.getElementById("alter-status").value.trim()
+            })
         });
 
         if (!res.ok) throw new Error();
 
         alerta("sucesso", "Pessoa alterada!");
+        pessoaCarregada = false;
         fecharModal("modal-alterar-pessoa");
         carregarPessoas();
     } catch {
@@ -216,15 +227,14 @@ document.querySelector("[data-submit-form='alter-person']")
     .addEventListener("click", alterarPessoa);
 
 // ====== EXCLUIR PESSOA ======
-async function excluirPessoa() {
+async function excluirPessoa(e) {
+    e.preventDefault();
+
     const id = document.getElementById("delete-id").value.trim();
     if (!id) return alerta("aviso", "Informe um ID válido.");
 
     try {
-        const res = await fetch(API + "/" + id, {
-            method: "DELETE"
-        });
-
+        const res = await fetch(API + "/" + id, { method: "DELETE" });
         if (!res.ok) throw new Error();
 
         alerta("sucesso", "Pessoa removida!");
@@ -240,5 +250,3 @@ document.querySelector("[data-submit-form='delete-person']")
 
 // ====== RENDER INICIAL ======
 carregarPessoas();
-
-

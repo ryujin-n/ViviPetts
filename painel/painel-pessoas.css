@@ -1,6 +1,6 @@
 .grid-pessoas {
     grid-template-columns:
-        1fr 3.5fr 2fr 5fr 2fr 1.5fr 1.5fr;
+        1fr 3.5fr 2fr 5fr 2fr 2fr 1.5fr;
 }
 
 /* ==== MODAL - OVERLAY E BOX ===== */
