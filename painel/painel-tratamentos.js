@@ -63,7 +63,7 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "http://127.0.0.1:5000/api/tratamentos"; 
+const API = "/api/tratamentos"; 
 let tratamentosData = []; 
 
 // ======================
@@ -259,3 +259,4 @@ document.querySelector("[data-submit-form='delete-tratamento']")
 
 // ====== RENDER INICIAL ======
 carregarTratamentos();
+
