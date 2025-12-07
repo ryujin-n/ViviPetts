@@ -263,8 +263,6 @@ body {
 .table-head div,
 .table-row div {
     padding: 0 20px;
-
-    /* impedir quebra e desalinhamento */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

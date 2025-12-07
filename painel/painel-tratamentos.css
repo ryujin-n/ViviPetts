@@ -116,7 +116,7 @@ textarea {
     cursor: pointer;
 }
 
-/* cores padrão (mesmo padrão das outras páginas) */
+/* cores padrão */
 .btn.azul { background: #1976D2; }
 .btn.verde { background: #2e7d32; }
 .btn.vermelho { background: #c62828; }
@@ -157,7 +157,7 @@ textarea {
     font-size: 14px;
 }
 
-/* ===== ALERTAS (mesmo estilo usado nas outras páginas) ===== */
+/* ===== ALERTAS ===== */
 .alert-box {
     display: flex;
     align-items: center;
@@ -181,14 +181,13 @@ textarea {
     cursor: pointer;
 }
 
-/* responsividade básica */
 @media (max-width: 720px) {
     .modal-box { width: calc(100% - 40px); padding: 18px; }
     .form-row { flex-direction: column; }
     .grid-tratamentos,
     .table-row.grid-tratamentos {
-        grid-template-columns: 1fr; /* simplifica em telas pequenas */
+        grid-template-columns: 1fr; 
         grid-auto-rows: minmax(36px, auto);
     }
-    .table-head.grid-tratamentos { display: none; } /* esconder header em mobile, se preferir */
+    .table-head.grid-tratamentos { display: none; } 
 }
