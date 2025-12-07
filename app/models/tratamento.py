@@ -8,7 +8,7 @@ class Tratamento(db.Model):
     data_tratamento = db.Column(db.String(20))
     tipo_tratamento = db.Column(db.String(100))
     valor_tratamento = db.Column(db.Float)
-    status_tratamento = db.Column(db.String(50))   # <--- trocado para status_tratamento
+    status_tratamento = db.Column(db.String(50))
 
     animal = db.relationship('Animal', back_populates='tratamentos')
 
@@ -16,6 +16,7 @@ class Tratamento(db.Model):
         return {
             'id': self.id,
             'animal_id': self.animal_id,
+            'animal_nome': self.animal.nome if self.animal else None,
             'data_tratamento': self.data_tratamento,
             'tipo_tratamento': self.tipo_tratamento,
             'valor_tratamento': self.valor_tratamento,
