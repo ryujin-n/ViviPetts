@@ -243,7 +243,6 @@ async function alterarTratamento() {
     }
 }
 
-// ✅ ÚNICA CORREÇÃO APLICADA (IGUAL AO ADOÇÕES)
 document.querySelector("[data-submit-form='alter-tratamento']")
     .addEventListener("click", e => {
         e.preventDefault();
@@ -273,4 +272,5 @@ document.querySelector("[data-submit-form='delete-tratamento']")
 
 // ====== INICIAL ======
 carregarTratamentos();
+
 
