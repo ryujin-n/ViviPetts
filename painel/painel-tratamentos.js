@@ -25,10 +25,7 @@ document.querySelectorAll(".action-btn").forEach(btn => {
 });
 
 document.querySelectorAll("[data-close-modal]").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const modalId = btn.dataset.closeModal;
-        fecharModal(modalId);
-    });
+    btn.addEventListener("click", () => fecharModal(btn.dataset.closeModal));
 });
 
 // ===== SISTEMA DE ALERTAs =====
@@ -36,43 +33,76 @@ function alerta(tipo, mensagem) {
     const container = document.getElementById("alert-container");
     if (!container) return;
 
-    let classe = "";
-    let icone = "";
+    const classes = {
+        sucesso: "alert-success",
+        aviso: "alert-warning",
+        erro: "alert-error"
+    };
 
-    if (tipo === "sucesso") { classe = "alert-success"; icone = "icone-sucesso.svg"; }
-    if (tipo === "aviso")    { classe = "alert-warning"; icone = "icone-alerta.svg"; }
-    if (tipo === "erro")     { classe = "alert-error"; icone = "icone-erro.svg"; }
+    const icones = {
+        sucesso: "icone-sucesso.svg",
+        aviso: "icone-alerta.svg",
+        erro: "icone-erro.svg"
+    };
 
-    const alerta = document.createElement("div");
-    alerta.className = "alert-box " + classe;
-    alerta.innerHTML = `
-        <img src="${icone}">
+    const alertaEl = document.createElement("div");
+    alertaEl.className = "alert-box " + (classes[tipo] || classes.aviso);
+
+    alertaEl.innerHTML = `
+        <img src="${icones[tipo] || icones.aviso}">
         <span>${mensagem}</span>
         <button class="alert-close">×</button>
     `;
 
-    alerta.querySelector(".alert-close").addEventListener("click", () => alerta.remove());
-    container.appendChild(alerta);
-    setTimeout(() => alerta.remove(), 3500);
+    alertaEl.querySelector(".alert-close").addEventListener("click", () => alertaEl.remove());
+
+    container.appendChild(alertaEl);
+    setTimeout(() => alertaEl.remove(), 3500);
 }
 
+// ======================
+// VARIÁVEIS
+// ======================
+const API = "http://127.0.0.1:5000/api/tratamentos"; // ajuste se necessário
+let tratamentosData = []; // preenchido pelo backend
+
+// ======================
+// BUSCAR LISTA DO BACKEND
+// ======================
+async function carregarTratamentos() {
+    try {
+        const res = await fetch(API + "/");
+        if (!res.ok) throw new Error("Erro ao buscar tratamentos");
+        tratamentosData = await res.json();
+        renderTratamentos(tratamentosData);
+    } catch (err) {
+        alerta("erro", "Falha ao carregar tratamentos do servidor.");
+        console.error(err);
+    }
+}
 
 // ====== RENDERIZAÇÃO ======
-function renderTratamentos(lista = tratamentosData) {
+function renderTratamentos(lista) {
     const container = document.getElementById("tratamentosRows");
-    container.innerHTML = "";
+    container.textContent = "";
 
     lista.forEach(t => {
         const row = document.createElement("div");
         row.classList.add("table-row", "grid-tratamentos");
+
+        const valorFmt = (t.valor_tratamento !== undefined && t.valor_tratamento !== null && t.valor_tratamento !== "")
+            ? Number(t.valor_tratamento).toFixed(2)
+            : "-";
+
         row.innerHTML = `
             <div>${t.id}</div>
-            <div>${t.animal}</div>
-            <div>${t.data}</div>
-            <div>${t.tipo}</div>
-            <div>R$ ${parseFloat(t.valor).toFixed(2)}</div>
-            <div>${t.status}</div>
+            <div>${t.animal_id}</div>
+            <div>${t.data_tratamento || "-"}</div>
+            <div>${t.tipo_tratamento || "-"}</div>
+            <div>${valorFmt !== "-" ? "R$ " + valorFmt : "-"}</div>
+            <div>${t.status_tratamento || "-"}</div>
         `;
+
         container.appendChild(row);
     });
 
@@ -81,142 +111,151 @@ function renderTratamentos(lista = tratamentosData) {
 
 // ====== CONTADORES ======
 function atualizarContadores() {
+    // total por status exibidos no HTML: Tratamento / Observação / Alta
     document.getElementById("total-tratamento").textContent =
-        tratamentosData.filter(t => t.status === "Tratamento").length;
+        tratamentosData.filter(t => t.status_tratamento === "Tratamento").length;
 
     document.getElementById("total-observacao").textContent =
-        tratamentosData.filter(t => t.status === "Observação").length;
+        tratamentosData.filter(t => t.status_tratamento === "Observação").length;
 
     document.getElementById("total-alta").textContent =
-        tratamentosData.filter(t => t.status === "Alta").length;
+        tratamentosData.filter(t => t.status_tratamento === "Alta").length;
 }
 
 // ====== BUSCA ======
 document.getElementById("searchInput").addEventListener("input", () => {
-    const t = document.getElementById("searchInput").value.toLowerCase().trim();
+    const txt = document.getElementById("searchInput").value.toLowerCase().trim();
 
-    const filtrados = tratamentosData.filter(tr =>
-        tr.id.toLowerCase().includes(t) ||
-        tr.animal.toLowerCase().includes(t) ||
-        tr.tipo.toLowerCase().includes(t) ||
-        tr.status.toLowerCase().includes(t) ||
-        tr.valor.toLowerCase().includes(t) ||
-        tr.data.toLowerCase().includes(t)
+    const filtrados = tratamentosData.filter(t =>
+        String(t.id).toLowerCase().includes(txt) ||
+        String(t.animal_id).toLowerCase().includes(txt) ||
+        (t.tipo_tratamento || "").toLowerCase().includes(txt) ||
+        (String(t.valor_tratamento || "")).toLowerCase().includes(txt) ||
+        (t.status_tratamento || "").toLowerCase().includes(txt) ||
+        (t.data_tratamento || "").toLowerCase().includes(txt)
     );
 
     renderTratamentos(filtrados);
 });
 
 // ====== ADICIONAR TRATAMENTO ======
-function cadastrarTratamento() {
+async function cadastrarTratamento() {
+    const animal_id = document.getElementById("add-animal").value.trim();
+    const data_tratamento = document.getElementById("add-data").value.trim();
+    const tipo_tratamento = document.getElementById("add-tipo").value.trim();
+    const valorRaw = document.getElementById("add-valor").value.trim();
+    const status_tratamento = document.getElementById("add-status").value.trim();
+
+    if (!animal_id) return alerta("aviso", "Animal (ID) é obrigatório!");
+    if (!data_tratamento) return alerta("aviso", "Data é obrigatória!");
+    if (!tipo_tratamento) return alerta("aviso", "Tipo é obrigatório!");
+    if (!valorRaw) return alerta("aviso", "Valor é obrigatório!");
+    if (!status_tratamento) return alerta("aviso", "Status é obrigatório!");
+
+    const valor_tratamento = Number(String(valorRaw).replace(/[^\d\-,.]/g, "").replace(",", "."));
+
     try {
-        const animal = document.getElementById("add-animal").value.trim();
-        const data   = document.getElementById("add-data").value.trim();
-        const tipo   = document.getElementById("add-tipo").value.trim();
-        const valor  = document.getElementById("add-valor").value.trim();
-        const status = document.getElementById("add-status").value.trim();
-
-        if (!animal) return alerta("aviso", "Animal deve ser preenchido!");
-        if (!data)   return alerta("aviso", "Data é obrigatória!");
-        if (!tipo)   return alerta("aviso", "Tipo deve ser preenchido!");
-        if (!valor)  return alerta("aviso", "Valor obrigatório!");
-        if (!status) return alerta("aviso", "Status obrigatório!");
-
-        const novoID = String(tratamentosData.length + 1).padStart(3, "0");
-
-        tratamentosData.push({
-            id: novoID,
-            animal,
-            data,
-            tipo,
-            valor,
-            status
+        const res = await fetch(API + "/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ animal_id, data_tratamento, tipo_tratamento, valor_tratamento, status_tratamento })
         });
 
-        fecharModal("modal-adicionar-tratamento");
+        if (!res.ok) throw new Error();
+
         alerta("sucesso", "Tratamento cadastrado!");
-        renderTratamentos();
-    } catch (e) {
-        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+        fecharModal("modal-adicionar-tratamento");
+        carregarTratamentos();
+    } catch (err) {
+        alerta("erro", "Falha ao cadastrar.");
+        console.error(err);
     }
 }
 
-document.querySelector("[data-submit-form='add-tratamento']").addEventListener("click", e => {
-    e.preventDefault();
-    cadastrarTratamento();
-});
+document.querySelector("[data-submit-form='add-tratamento']")
+    .addEventListener("click", e => { e.preventDefault(); cadastrarTratamento(); });
 
-// ====== ALTERAR TRATAMENTO ======
-document.getElementById("alter-id-tratamento").addEventListener("keyup", e => {
+// ====== CARREGAR PARA ALTERAR ======
+document.getElementById("alter-id-tratamento").addEventListener("keyup", async e => {
     if (e.key !== "Enter") return;
 
     const id = e.target.value.trim();
-    const tr = tratamentosData.find(t => t.id === id);
+    if (!id) return;
 
-    if (!tr) return alerta("erro", "ID não encontrado!");
+    try {
+        const res = await fetch(API + "/" + id);
+        if (!res.ok) return alerta("erro", "ID não encontrado!");
 
-    document.getElementById("alter-animal").value = tr.animal;
-    document.getElementById("alter-data").value   = tr.data;
-    document.getElementById("alter-tipo").value   = tr.tipo;
-    document.getElementById("alter-valor").value  = tr.valor;
-    document.getElementById("alter-status").value = tr.status;
+        const t = await res.json();
+
+        document.getElementById("alter-animal").value = t.animal_id || "";
+        document.getElementById("alter-data").value = t.data_tratamento || "";
+        document.getElementById("alter-tipo").value = t.tipo_tratamento || "";
+        document.getElementById("alter-valor").value = t.valor_tratamento !== undefined && t.valor_tratamento !== null ? t.valor_tratamento : "";
+        document.getElementById("alter-status").value = t.status_tratamento || "";
+
+    } catch (err) {
+        alerta("erro", "Erro ao buscar tratamento.");
+        console.error(err);
+    }
 });
 
-function alterarTratamento() {
+// ====== ALTERAR TRATAMENTO ======
+async function alterarTratamento() {
+    const id = document.getElementById("alter-id-tratamento").value.trim();
+    if (!id) return alerta("aviso", "Informe um ID válido.");
+
+    const animal_id = document.getElementById("alter-animal").value.trim();
+    const data_tratamento = document.getElementById("alter-data").value.trim();
+    const tipo_tratamento = document.getElementById("alter-tipo").value.trim();
+    const valorRaw = document.getElementById("alter-valor").value.trim();
+    const status_tratamento = document.getElementById("alter-status").value.trim();
+
+    if (!animal_id) return alerta("aviso", "Animal (ID) é obrigatório!");
+
+    const valor_tratamento = Number(String(valorRaw).replace(/[^\d\-,.]/g, "").replace(",", "."));
+
     try {
-        const id = document.getElementById("alter-id-tratamento").value.trim();
-        const tr = tratamentosData.find(t => t.id === id);
+        const res = await fetch(API + "/" + id, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ animal_id, data_tratamento, tipo_tratamento, valor_tratamento, status_tratamento })
+        });
 
-        if (!tr)
-            return alerta("erro", "ID não encontrado!");
+        if (!res.ok) throw new Error();
 
-        const animal = document.getElementById("alter-animal").value.trim();
-        if (!animal)
-            return alerta("aviso", "Carregue um tratamento antes de alterar (digite o ID e pressione ENTER).");
-
-        tr.animal = animal;
-        tr.data   = document.getElementById("alter-data").value.trim();
-        tr.tipo   = document.getElementById("alter-tipo").value.trim();
-        tr.valor  = document.getElementById("alter-valor").value.trim();
-        tr.status = document.getElementById("alter-status").value.trim();
-
-        fecharModal("modal-alterar-tratamento");
         alerta("sucesso", "Tratamento alterado!");
-        renderTratamentos();
-
-    } catch (e) {
-        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+        fecharModal("modal-alterar-tratamento");
+        carregarTratamentos();
+    } catch (err) {
+        alerta("erro", "Falha ao alterar.");
+        console.error(err);
     }
 }
 
-document.querySelector("[data-submit-form='alter-tratamento']").addEventListener("click", e => {
-    e.preventDefault();
-    alterarTratamento();
-});
+document.querySelector("[data-submit-form='alter-tratamento']")
+    .addEventListener("click", e => { e.preventDefault(); alterarTratamento(); });
 
 // ====== EXCLUIR TRATAMENTO ======
-function excluirTratamento() {
+async function excluirTratamento() {
+    const id = document.getElementById("delete-id-tratamento").value.trim();
+    if (!id) return alerta("aviso", "Informe um ID válido.");
+
     try {
-        const id = document.getElementById("delete-id-tratamento").value.trim();
-        const index = tratamentosData.findIndex(t => t.id === id);
+        const res = await fetch(API + "/" + id, { method: "DELETE" });
+        if (!res.ok) throw new Error();
 
-        if (index === -1)
-            return alerta("erro", "ID não encontrado!");
-
-        tratamentosData.splice(index, 1);
-
-        fecharModal("modal-excluir-tratamento");
         alerta("sucesso", "Tratamento removido!");
-        renderTratamentos();
-    } catch (e) {
-        alerta("erro", "Ocorreu um erro ao salvar. Tente novamente.");
+        fecharModal("modal-excluir-tratamento");
+        carregarTratamentos();
+    } catch (err) {
+        alerta("erro", "Falha ao deletar.");
+        console.error(err);
     }
 }
 
-document.querySelector("[data-submit-form='delete-tratamento']").addEventListener("click", e => {
-    e.preventDefault();
-    excluirTratamento();
-});
+document.querySelector("[data-submit-form='delete-tratamento']")
+    .addEventListener("click", e => { e.preventDefault(); excluirTratamento(); });
 
 // ====== RENDER INICIAL ======
-renderTratamentos();
+carregarTratamentos();
