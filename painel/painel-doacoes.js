@@ -62,7 +62,7 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS / CONFIG
 // ======================
-const API = "http://127.0.0.1:5000/api/doacoes";
+const API = "/api/doacoes";
 let donationsData = []; 
 
 // ====== HELPERS DE VALOR ======
@@ -366,6 +366,7 @@ document.querySelectorAll("[data-submit-form='delete-doacao']").forEach(btn => {
 
 // ====== RENDER INICIAL ======
 carregarDoacoes();
+
 
 
 
