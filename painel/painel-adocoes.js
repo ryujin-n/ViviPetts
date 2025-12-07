@@ -68,7 +68,7 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "http://127.0.0.1:5000/api/adocoes";
+const API = "/api/adocoes";
 let adocoesData = [];
 
 // ======================
@@ -284,3 +284,4 @@ document
 
 // ====== RENDER INICIAL ======
 carregarAdocoes();
+
