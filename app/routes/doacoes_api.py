@@ -28,6 +28,7 @@ def criar_doacao():
 
     db.session.add(doacao)
     db.session.commit()
+
     return jsonify(doacao.to_dict()), 201
 
 @doacoes_bp.route('/<int:id>', methods=['PUT'])
