@@ -63,7 +63,7 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "http://127.0.0.1:5000/api/animais"; 
+const API = "/api/animais"; 
 let animalsData = []; 
 
 // ======================
@@ -255,4 +255,5 @@ document.querySelector("[data-submit-form='delete-animal']")
 
 // ====== RENDER INICIAL ======
 carregarAnimais();
+
 
