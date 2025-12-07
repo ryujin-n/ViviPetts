@@ -28,7 +28,7 @@ document.querySelectorAll("[data-close-modal]").forEach(btn => {
     btn.addEventListener("click", () => fecharModal(btn.dataset.closeModal));
 });
 
-// ===== SISTEMA DE ALERTAS (PADRÃO) =====
+// ===== SISTEMA DE ALERTAS  =====
 function alerta(tipo, mensagem) {
     const container = document.getElementById("alert-container");
     if (!container) return;
@@ -250,3 +250,4 @@ document.querySelector("[data-submit-form='delete-person']")
 
 // ====== RENDER INICIAL ======
 carregarPessoas();
+
