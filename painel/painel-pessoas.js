@@ -63,7 +63,7 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "http://127.0.0.1:5000/api/pessoas"; 
+const API = "/api/pessoas"; 
 let pessoasData = []; 
 
 // ======================
@@ -240,4 +240,5 @@ document.querySelector("[data-submit-form='delete-person']")
 
 // ====== RENDER INICIAL ======
 carregarPessoas();
+
 
