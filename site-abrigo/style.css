@@ -1,5 +1,5 @@
 @import url("fonts.css");
-@import "tailwindcss";
+/* @import "tailwindcss"; */
 @source "../node_modules/flowbite/dist/flowbite.min.js";
 @plugin "flowbite/plugin";
 
@@ -28,8 +28,18 @@
   --azul_claro3: #e2eafc;
   --bg: #edf2fb;
   background-color: var(--bg);
-}
 
+}
+img {
+    user-select: none; 
+    pointer-events: none; 
+}
+input:focus{
+    outline: none;
+}
+html{
+  scroll-behavior: smooth;
+}
 @layer properties;
 @layer theme, base, components, utilities;
 @layer base {
@@ -549,6 +559,7 @@ body {
 }
 button {
   cursor: pointer;
+  outline: none;
 }
 p {
   letter-spacing: 0px;
@@ -670,8 +681,10 @@ footer {
   }
 
   a {
+    display: block;
     text-decoration: none;
     color: #fff;
+    width: 70px;
   }
   li {
     margin-bottom: 5px;
@@ -1118,7 +1131,9 @@ footer {
 #cartilha i {
   font-size: 1.1rem;
 }
+
 /* ---------- */
+
 .spot {
   margin-top: 2rem;
   padding: 0rem 4rem;
@@ -1153,6 +1168,7 @@ footer {
   mask-position: -11.6rem 0rem;
   background-size: 55rem;
   mask-size: 1105px 912px;
+  margin-left: 10rem;
 }
 .mask2 {
   width: 917px;
@@ -1174,6 +1190,8 @@ footer {
 .circle {
   background-image: url("src/events/565339118_18195195226325686_4628567797567693999_n.jpg");
   background-size: 33rem;
+  top: 83.6rem;
+  left: 62.6rem;
 }
 .img2 {
   background-image: url("src/events/IMG-20251124-WA0020.jpg");
@@ -1184,4 +1202,111 @@ footer {
   background-image: url("src/events/IMG-20251124-WA0010.jpg");
   background-size: 30.9rem;
   background-position: -6rem -4rem;
+}
+.form-1{
+  width: 50rem;
+  padding: 5rem;
+
+  h1{
+    font-family: Coolvetica;
+    font-size: 48px;
+    font-weight: 400;
+  }
+
+  input[type="text"],input[type="tel"],input[id="outros"]{
+    border-radius: 4px;
+    color: #001d3d;
+    height:56px ;
+    background-color: var(--bg);
+    border: 1px solid #004E89;
+  }
+
+  #txtNome{
+    position: relative;
+  }
+  #txtNome label{
+    position: absolute;
+    background-color: var(--bg);
+    bottom: 2rem;
+    margin-left: 1em;
+    padding: 0.4rem;
+  }
+  input[type="radio"]{
+    border-color: #001d3d;
+  }
+  input[type="radio"]:checked{
+    border-color: var(--laranja1);
+  }
+   input[type="text"]:focus,input[type="tel"]:focus,input[id="outros"]:focus{
+    border-color: var(--laranja1);
+    outline: none;
+    
+    label{
+      color: var(--laranja1);
+    }
+  }
+}
+
+.pessoas{
+  margin: auto;
+  margin-top: 5rem;
+  height: 30rem;
+  width: 100rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.maskpfp{
+  background-color: blue;
+  height: 20rem;
+  width: 20rem;
+  border-radius: 1rem;
+}
+.s1 .maskpfp {
+  background-image: url("src/WhatsApp Image 2025-12-04 at 12.32.49_e82ec88e.jpg");background-position: 0rem -52rem;
+    background-size: 20rem;
+}
+.s2 .maskpfp {
+  background-image: url("src/WhatsApp Image 2025-12-04 at 12.32.48_597e0ea9.jpg");background-position: 0rem -52rem;
+    background-size: 20rem;
+}
+.s3 .maskpfp {
+  background-image: url("src/WhatsApp Image 2025-12-04 at 12.32.47_471ad6ec.jpg");background-position: 0rem -59rem;
+    background-size: 20rem;
+  }
+.s4 .maskpfp {
+  background-image: url("src/events/IMG-20251124-WA0027.jpg");    background-position: -24.6rem -19rem;
+  background-size: 50rem;
+  }
+
+  .s1, .s2, .s3, .s4{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20rem;
+
+  h2,h4{
+    margin: 0;
+    margin-top:1rem;
+    text-align: center;
+  }
+
+  h2{
+    font-family: Zen Maru Gothic;
+    font-weight: 900;
+  }
+  h4{
+    font-family: Zen Maru Gothic;
+    margin-top: 0.3rem;
+  }
+}
+#accordion-collapse p{
+  font-family: Be Vietnam Pro;
+}
+#accordion-collapse span{
+  font-size: 16pt;
+  color:var(--azul1);
+}
+#accordion-collapse h2{
+  margin: 0;
 }

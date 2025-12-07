@@ -57,14 +57,6 @@ function alerta(tipo, mensagem) {
 }
 
 
-// =========================
-// DADOS EXEMPLO (REMOVER QUANDO FOR BACKEND)
-// =========================
-let donationsData = [
-    { id: "001", doador: "Maria Silva",   data: "12/09/2025", tipo: "Ração",    valor: "20", obs: "" },
-    { id: "002", doador: "Carlos Almeida", data: "01/02/2024", tipo: "Dinheiro", valor: "50", obs: "Nota exemplo" }
-];
-
 
 // ====== HELPERS DE VALOR ======
 function parseNumber(valor) {

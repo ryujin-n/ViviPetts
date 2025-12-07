@@ -12,7 +12,6 @@ def create_app():
     CORS(app)
     db.init_app(app)
 
-    # register blueprints
     from app.routes.animais_api import animais_bp
     from app.routes.pessoas_api import pessoas_bp
     from app.routes.adocoes_api import adocoes_bp
@@ -31,7 +30,6 @@ def create_app():
 if __name__ == '__main__':
     app = create_app()
     with app.app_context():
-        # create tables
-        from app import models  # import models so they are registered
+        from app import models 
         db.create_all()
     app.run(debug=True)

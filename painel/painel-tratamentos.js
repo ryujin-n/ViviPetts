@@ -56,13 +56,6 @@ function alerta(tipo, mensagem) {
     setTimeout(() => alerta.remove(), 3500);
 }
 
-// =========================
-// EXEMPLO (DELETAR DEPOIS)
-// =========================
-let tratamentosData = [
-    { id: "001", animal: "Luna (ID: 001)", data: "2024-01-05", tipo: "Vacina", valor: "120.00", status: "Tratamento" },
-    { id: "002", animal: "Felix (ID: 002)", data: "2024-01-20", tipo: "Exames", valor: "60.00", status: "Observação" }
-];
 
 // ====== RENDERIZAÇÃO ======
 function renderTratamentos(lista = tratamentosData) {

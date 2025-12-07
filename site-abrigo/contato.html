@@ -5,26 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Abrigo ViviPetts - Contato</title>
     <link
-    rel="stylesheet"
-      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-solid.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-regular.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-light.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/duotone.css"
-    />
-    <link
       rel="stylesheet"
       href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"
     />
@@ -43,19 +23,40 @@
     <link
       rel="stylesheet"
       href="https://site-assets.fontawesome.com/releases/v7.1.0/css/duotone.css"
-      />
-      <link rel="shortcut icon" href="src/icon.ico" type="image/x-icon" />
-      <link rel="stylesheet" href="src/uikit-3.24.2/css/uikit.css" />
-      <link rel="stylesheet" href="src/uikit-3.24.2/css/uikit-rtl.css" />
-      <link rel="stylesheet" href="../node_modules/flowbite/dist/flowbite.css" />
-    </head>
-    <link rel="stylesheet" href="src/aos-master/aos-master/dist/aos.css" />
-    <link rel="stylesheet" href="style.css" />
+    />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-solid.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-regular.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/sharp-light.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v7.1.0/css/duotone.css"
+    />
+    <link rel="shortcut icon" href="src/icon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="src/uikit-3.24.2/css/uikit.css" />
+    <link rel="stylesheet" href="src/uikit-3.24.2/css/uikit-rtl.css" />
+    <link rel="stylesheet" href="../node_modules/flowbite/dist/flowbite.css" />
+  </head>
+  <link rel="stylesheet" href="src/aos-master/aos-master/dist/aos.css" />
+  <link rel="stylesheet" href="style.css" />
   <body>
-    <!-- <img style="position: absolute;
+    <img style="position: absolute;
     top: -12rem;
-    right: 51rem;
-    rotate: 117deg;" src="src/Group 22.svg" alt="" /> -->
+    left: 41rem;
+    z-index:-1;
+    " src="src/Group 22.svg" alt="" />
     <section>
       <nav class="navbar">
         <svg
@@ -140,42 +141,298 @@
           />
         </svg>
         <div class="nav-link">
-          <a class="nav-active" href="index.html">Início</a>
-          <a href="#sobre-nos">Sobre Nós</a>
-          <a href="galeria.html">Adote</a>
-          <a href="#doacao">Doação</a>
-          <a href="contato.html">Contato</a>
-        </div>
+        <a class="nav-active" href="index.html">Início</a>
+        <a href="sobre-nos.html">Sobre Nós</a>
+        <a href="galeria.html">Adote</a>
+        <a href="index.html#doacao">Doação</a>
+        <a href="contato.html">Contato</a>
+      </div>
       </nav>
     </section>
 
-    <section>
-      <form action="" method="post">
-        <div>
-          <input type="text" name="" id="">
-          <label for=""></label>
-        </div>
-        <div>
-          <input type="text" name="" id="">
-          <label for=""></label>
-        </div>
-        <div>
-          <input type="text" name="" id="">
-          <label for=""></label>
-        </div>
-        
-        <div>
-          <h5></h5>
-          <input type="radio" name="" id="">
-          <input type="radio" name="" id="">
-          <input type="radio" name="" id="">
-          <input type="radio" name="" id="">
-          <input type="text" name="" id="">
-        </div>
-        <button class="h-10 px-5 text-red-700 transition-colors duration-150 border border-red-500 rounded-lg focus:shadow-outline hover:bg-red-500 hover:text-red-100" type="submit">werwer</button>
-      </form>
+    <section style="
+            margin-left: 20rem;
+            width: 80%;">
+      <div class="form1">
+        <form action="" method="post" id="contato" name="contato">
+          <div class="form-1">
+            <h1
+              class="text-3xl font-bold text-gray-900 mb-2"
+              style="margin: auto"
+            >
+              Formulário para Contato
+            </h1>
+            <div class="h-1 bg-orange-500 mb-8" style="width: 18%"></div>
 
+            <div class="space-y-6">
+              <div id="txtNome" name="txtNome" class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    for="nome"
+                    id="lblnome"
+                    class="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Nome
+                  </label>
+                  <input
+                    type="text"
+                    onclick="lbl()"
+                    id="nome"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+                  />
+                </div>
+                <div>
+                  <label
+                    id="lbltel"
+                    for="telefone"
+                    class="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Telefone
+                  </label>
+                  <input
+                    type="tel"
+                    id="telefone"
+                    pattern="^(\+55)?[ ]?(\(?[1-9]{2}\)?)?[ ]?(9[0-9]{4})[ ]?(\-|\.)?[ ]?([0-9]{4})$"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for="endereco"
+                  id="lblend"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Endereço
+                </label>
+                <input
+                  type="text"
+                  id="endereco"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-900 mb-3">
+                  Selecione o Motivo do Contato:
+                </label>
+                <div class="space-y-3">
+                  <label class="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="motivo"
+                      value="resgate"
+                      checked
+                      class="w-4 h-4 text-orange-500 focus:ring-orange-500"
+                    />
+                    <span class="ml-3 text-gray-700">Resgate de animais</span>
+                  </label>
+
+                  <label class="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="motivo"
+                      value="adocao"
+                      class="w-4 h-4 text-orange-500 focus:ring-orange-500"
+                    />
+                    <span class="ml-3 text-gray-700">Adoção de Animais</span>
+                  </label>
+
+                  <label class="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="motivo"
+                      value="voluntariado"
+                      class="w-4 h-4 text-orange-500 focus:ring-orange-500"
+                    />
+                    <span class="ml-3 text-gray-700">Voluntariado</span>
+                  </label>
+
+                  <label class="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="motivo"
+                      value="outros"
+                      class="w-4 h-4 text-orange-500 focus:ring-orange-500"
+                      onchange="toggleOutrosField()"
+                    />
+                    <span class="ml-3 text-gray-700">Outros</span>
+                  </label>
+                </div>
+              </div>
+
+              <div id="outrosField" class="hidden">
+                <input
+                  type="text"
+                  id="outros"
+                  placeholder="Especifique o motivo"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+                />
+              </div>
+
+              <button
+                onclick="enviarFormulario()"
+                class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md hover:shadow-lg"
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="carform">
+        <img
+          src="src/cat-isolated-white-background.png"
+          style="
+            position: absolute;
+            height: 52rem;
+            width: 58rem;
+            bottom: 2rem;
+            right: 5rem;
+            z-index: -1;
+          "
+          alt=""
+        />
+        <img
+          src="src/Group 196.png"
+          alt=""
+          style="position: absolute; top: 9rem; right: 11rem"
+        />
+      </div>
     </section>
+
+    <footer>
+      <div style="display: flex; gap: 50rem; padding: 42px 80px">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="254"
+          height="132"
+          viewBox="0 0 254 132"
+          fill="none"
+        >
+          <path
+            d="M116.161 99.6682L115.028 96.9513H108.472L107.339 99.6682H105.68L111.467 86.0636H112.054L117.841 99.6682H116.161ZM114.421 95.5321L111.75 88.9427L109.079 95.5321H114.421Z"
+            fill="white"
+          />
+          <path
+            d="M129.416 89.5712C132.229 89.5712 134.293 91.8217 134.293 94.7413C134.293 97.6407 132.249 99.8912 129.437 99.8912C127.899 99.8912 126.462 99.2221 125.693 98.107V99.6682H124.236V84.4619H125.794V91.2338C126.584 90.1997 127.939 89.5712 129.416 89.5712ZM129.194 98.4517C131.217 98.4517 132.694 96.8702 132.694 94.721C132.694 92.5719 131.197 91.0107 129.194 91.0107C127.474 91.0107 125.774 92.1461 125.774 94.7413C125.774 97.3365 127.494 98.4517 129.194 98.4517Z"
+            fill="white"
+          />
+          <path
+            d="M145.58 89.7131C145.904 89.7131 146.106 89.7537 146.308 89.7942V91.1729H145.722C144.123 91.1729 142.626 92.1867 142.626 94.0723V99.6682H141.068V89.7942H142.525V91.1932C143.253 90.22 144.406 89.7131 145.58 89.7131Z"
+            fill="white"
+          />
+          <path
+            d="M153.235 87.1585C152.587 87.1585 152.061 86.6719 152.061 86.0231C152.061 85.3946 152.587 84.8877 153.235 84.8877C153.862 84.8877 154.388 85.3946 154.388 86.0231C154.388 86.6719 153.862 87.1585 153.235 87.1585ZM152.445 99.6682V89.7942H154.003V99.6682H152.445Z"
+            fill="white"
+          />
+          <path
+            d="M169.464 89.7942H170.941V98.7152C170.941 101.756 169.019 103.541 166.146 103.541C164.082 103.541 162.483 102.608 161.512 101.635L162.423 100.54C163.374 101.371 164.487 102.101 166.105 102.101C168.109 102.101 169.383 100.986 169.383 98.7963V97.9245C168.594 98.9585 167.198 99.5668 165.721 99.5668C162.949 99.5668 160.885 97.4582 160.885 94.5791C160.885 91.7204 162.949 89.5712 165.721 89.5712C167.279 89.5712 168.695 90.2403 169.464 91.3757V89.7942ZM165.964 98.1273C167.684 98.1273 169.403 97.0527 169.403 94.5791C169.403 92.1056 167.663 91.0513 165.964 91.0513C163.961 91.0513 162.463 92.5111 162.463 94.5994C162.463 96.6877 163.961 98.1273 165.964 98.1273Z"
+            fill="white"
+          />
+          <path
+            d="M182.833 99.8709C179.96 99.8709 177.694 97.5798 177.694 94.721C177.694 91.8217 179.96 89.5712 182.853 89.5712C185.727 89.5712 188.013 91.842 188.013 94.721C188.013 97.5798 185.727 99.8709 182.833 99.8709ZM182.833 98.4314C184.857 98.4314 186.415 96.8297 186.415 94.7413C186.415 92.6125 184.877 91.0107 182.853 91.0107C180.81 91.0107 179.292 92.6125 179.292 94.7413C179.292 96.8499 180.81 98.4314 182.833 98.4314Z"
+            fill="white"
+          />
+          <path
+            d="M110.564 131.002H105.263L96.1572 104.077H102.146L108.014 122.973L113.842 104.077H119.669L110.564 131.002Z"
+            fill="white"
+          />
+          <path
+            d="M126.459 131.002H121.198V111.052H126.459V131.002ZM126.459 108.659H121.198V103.753H126.459V108.659Z"
+            fill="white"
+          />
+          <path
+            d="M140.557 131.002H135.053L127.931 111.052H133.799L137.967 124.23L142.176 111.052H147.72L140.557 131.002Z"
+            fill="white"
+          />
+          <path
+            d="M154.518 131.002H149.257V111.052H154.518V131.002ZM154.518 108.659H149.257V103.753H154.518V108.659Z"
+            fill="white"
+          />
+          <path
+            d="M162.424 116.648H167.766C171.004 116.648 172.339 114.985 172.339 112.633C172.339 110.403 171.004 108.74 167.766 108.74H162.424V116.648ZM162.424 131.002H156.799V104.077H168.656C173.917 104.077 177.276 107.929 177.276 112.795C177.276 117.702 173.917 121.23 168.656 121.23H162.424V131.002Z"
+            fill="white"
+          />
+          <path
+            d="M183.516 119.081H191.65C191.569 116.12 189.626 114.701 187.562 114.701C185.458 114.701 183.718 116.323 183.516 119.081ZM197.072 122.406H183.354C183.516 125.406 185.215 127.353 187.805 127.353C189.505 127.353 191.002 126.501 191.366 125.122H196.789C195.575 129.218 192.297 131.529 188.048 131.529C181.411 131.529 178.093 127.88 178.093 120.662C178.093 114.498 181.613 110.524 187.724 110.524C193.835 110.524 197.072 114.498 197.072 122.406Z"
+            fill="white"
+          />
+          <path
+            d="M210.181 123.054V117.864H215.078V123.541C215.078 127.758 212.65 131.529 207.025 131.529C201.197 131.529 198.891 127.799 198.891 123.5V105.658H204.07V111.052H215.078V114.782H204.07V122.973C204.07 125.487 204.961 126.947 207.106 126.947C209.21 126.947 210.181 125.528 210.181 123.054Z"
+            fill="white"
+          />
+          <path
+            d="M228.518 123.054V117.864H233.415V123.541C233.415 127.758 230.987 131.529 225.362 131.529C219.534 131.529 217.228 127.799 217.228 123.5V105.658H222.408V111.052H233.415V114.782H222.408V122.973C222.408 125.487 223.298 126.947 225.443 126.947C227.547 126.947 228.518 125.528 228.518 123.054Z"
+            fill="white"
+          />
+          <path
+            d="M252.602 117.094H247.543C247.26 115.147 246.208 114.458 243.82 114.458C241.837 114.458 240.704 114.944 240.704 116.12C240.704 117.296 241.797 117.783 243.942 118.391C246.208 119.04 248.353 119.486 249.89 120.094C251.995 120.946 253.168 122.325 253.168 124.92C253.168 129.056 250.133 131.529 244.468 131.529C238.357 131.529 234.958 128.65 234.877 124.595H240.299C240.299 126.461 241.878 127.555 244.427 127.555C246.289 127.555 247.948 126.988 247.948 125.487C247.948 124.068 246.451 123.622 244.751 123.217C241.392 122.406 239.531 121.838 238.114 120.946C236.253 119.77 235.605 118.229 235.605 116.445C235.605 113.079 237.912 110.524 243.982 110.524C249.729 110.524 252.319 112.795 252.602 117.094Z"
+            fill="white"
+          />
+          <path
+            d="M44.9656 0C47.4606 0.319633 47.4606 0.319633 49.5077 2.36528C50.1355 5.10276 50.658 7.78091 51.1071 10.5479C51.3067 11.7218 51.3067 11.7218 51.5104 12.9194C52.3512 17.9835 53.0168 23.033 53.3861 28.1556C53.5097 30.086 53.5097 30.086 54.6256 32.0272C56.3845 32.7619 56.3845 32.7619 58.544 33.3417C68.3656 36.4519 84.2845 41.5931 89.939 50.7257C91.1228 53.7125 91.825 56.5127 92.498 59.6434C95.0046 64.7008 98.9246 68.446 102.886 72.3788C106.225 75.8545 107.839 78.2993 107.852 83.1684C104.759 91.5929 98.1939 102.854 90.4508 107.716C87.1734 109.052 84.2653 108.579 80.7958 108.256C74.2958 107.776 69.7368 108.08 64.6435 112.411C58.885 117.922 54.5318 123.433 52.5785 131.241C35.6894 131.241 18.8004 131.241 1.3996 131.241C0.947997 110.547 0.947997 110.547 0.849823 101.663C0.782744 95.6221 0.703771 89.583 0.550197 83.5434C0.427032 78.6688 0.360371 73.7962 0.331342 68.9201C0.310682 67.0686 0.270334 65.2171 0.209146 63.3665C-0.297642 47.3899 -0.297643 47.3899 5.15501 40.818C8.57723 37.183 12.1236 34.2927 16.4798 31.8814C20.2687 29.7289 21.5905 27.9079 23.7264 24.1642C26.8269 18.8115 26.8269 18.8115 29.0362 17.7076C29.24 19.5766 29.24 19.5766 29.448 21.4833C29.6305 23.1441 29.8131 24.8048 29.9958 26.4656C30.0848 27.2837 30.1739 28.1018 30.2657 28.9447C30.7943 33.7379 31.3957 38.5086 32.1069 43.2782C34.4714 42.9407 36.8358 42.6032 39.2719 42.2554C39.0503 41.7544 38.8286 41.2534 38.6002 40.7372C36.2373 34.397 35.8616 28.3636 35.8174 21.6711C35.8035 20.8052 35.7897 19.9393 35.7754 19.0471C35.8196 12.7546 36.5129 6.6411 40.7498 1.64561C42.3427 0.319633 42.3427 0.319633 44.9656 0ZM73.05 55.5521C70.3477 58.2524 67.6455 60.9526 64.8614 63.7347C66.6493 67.308 67.8441 68.9915 70.619 71.6616C71.2655 72.2892 71.9121 72.9168 72.5782 73.5634C73.0717 74.0328 73.5651 74.5022 74.0736 74.9858C75.7625 73.2981 77.4514 71.6105 79.1915 69.8717C77.8403 68.5215 76.4892 67.1714 75.0971 65.7804C75.4349 65.1897 75.7727 64.599 76.1207 63.9904C77.4214 61.4857 77.4214 61.4857 77.1443 57.5978C75.7932 56.9227 74.4421 56.2477 73.05 55.5521ZM54.6256 80.0999C54.6256 82.4626 54.6256 84.8254 54.6256 87.2597C60.3679 87.2597 66.1101 87.2597 72.0264 87.2597C72.0264 87.9347 72.0264 88.6098 72.0264 89.3053C70.065 89.4932 70.065 89.4932 68.064 89.6849C62.7995 90.2694 57.6843 91.3035 52.5145 92.4377C51.1855 92.7235 51.1855 92.7235 49.8296 93.0151C47.6743 93.4791 45.5201 93.9487 43.3663 94.4194C43.704 96.7822 44.0418 99.1449 44.3898 101.579C64.4232 97.8365 64.4232 97.8365 84.3093 93.3966C83.8027 87.321 83.8027 87.321 83.2858 81.1227C69.099 80.6164 69.099 80.6164 54.6256 80.0999Z"
+            fill="white"
+          />
+          <path
+            d="M67.9321 3.3881C69.2676 6.05718 69.0714 8.01844 69.0556 11.0033C69.0523 12.1043 69.049 13.2052 69.0456 14.3395C69.0371 15.4932 69.0285 16.6469 69.0197 17.8355C69.015 18.9971 69.0104 20.1587 69.0057 21.3554C68.9936 24.2309 68.9767 27.1062 68.9557 29.9815C62.2194 28.6865 62.2194 28.6865 59.7435 26.9131C58.4802 23.2689 58.1519 19.483 57.6963 15.662C57.5274 14.5439 57.3586 13.4258 57.1845 12.2739C57.8602 8.64518 59.5123 7.05607 62.0945 4.51481C63.8378 3.3881 63.8378 3.3881 67.9321 3.3881Z"
+            fill="white"
+          />
+          <rect x="29" y="46" width="57" height="57" fill="white" />
+          <path
+            d="M43.0267 97.8496C43.5771 99.9885 45.558 103.698 49.0777 101.424"
+            stroke="white"
+          />
+        </svg>
+        <div style="display: flex">
+          <div>
+            <h3>Telefone</h3>
+            <ul>
+              <li class="">(11) 96766-8831</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="">Menu</h3>
+            <ul class="menu-footer">
+              <li class=""><a href="index.html">Início</a></li>
+              <li class="">
+                <a href="sobre-nos.html">Sobre Nós</a>
+              </li>
+              <li class="">
+                <a href="galeria.html">Galeria</a>
+              </li>
+              <li class="">
+                <a href="index.html#doacao">Doação</a>
+              </li>
+              <li class=""><a href="contato.html">Contato</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="ft2">
+        <span style="margin-right: 43rem"> &copy; ©2025 Abrigo ViviPetts </span>
+
+        <span style="display: flex; gap: 0.5rem">
+          Desenvolvido com
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="18"
+            viewBox="0 0 20 18"
+            fill="none"
+          >
+            <path
+              d="M8.67832 1.14764C9.13719 1.53121 9.48726 1.95468 9.84526 2.44161C9.9471 2.44161 10.0489 2.44161 10.1539 2.44161C10.3078 2.2528 10.4544 2.05757 10.5975 1.85982C11.4364 0.825644 12.7435 0.125251 14.0465 0.00161904C15.8425 -0.0348903 17.148 0.545502 18.4864 1.79964C18.8652 2.25219 19.1503 2.7103 19.4122 3.24407C19.4643 3.34669 19.5164 3.4493 19.5701 3.55503C20.1882 5.06475 20.0918 7.13789 19.5858 8.6607C18.1332 12.0047 15.2886 14.4894 12.4685 16.565C12.366 16.6415 12.2635 16.718 12.158 16.7968C11.8685 17.0111 11.5764 17.2204 11.2822 17.4276C11.1161 17.5447 10.95 17.6618 10.7789 17.7824C10.1997 18.0617 9.98484 18.0591 9.38234 17.8489C8.97478 17.6179 8.60145 17.3483 8.22505 17.0665C8.06287 16.9471 8.06287 16.9471 7.89741 16.8252C7.56769 16.5804 7.24033 16.3324 6.91345 16.0835C6.82019 16.0135 6.72692 15.9434 6.63084 15.8713C4.30782 14.1143 2.08968 12.0102 0.741232 9.34279C0.668829 9.20087 0.596426 9.05895 0.521829 8.91272C-0.12424 7.39848 -0.174528 5.31685 0.394045 3.76567C0.502987 3.53471 0.61801 3.30664 0.741232 3.08358C0.833526 2.91476 0.92582 2.74594 1.02091 2.57201C2.96842 -0.0323368 5.97655 -0.870006 8.67832 1.14764Z"
+              fill="#FF6B35"
+            />
+          </svg>
+        </span>
+
+        <span style="margin-left: 43rem"> Todos os direitos reservados. </span>
+      </div>
+    </footer>
 
     <script src="src/aos-master/aos-master/dist/aos.js"></script>
     <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
@@ -183,10 +440,62 @@
     <script src="src/uikit-3.24.2/js/uikit.js"></script>
     <script src="src/uikit-3.24.2/js/uikit-icons.js"></script>
     <script>
+      function lbl() {
+        const campos = ["nome", "telefone", "endereco"];
+
+        campos.forEach((id) => {
+          const campo = document.getElementById(id);
+
+          campo.addEventListener("focus", () => {
+            campo.labels[0].style.color = "var(--laranja1)";
+          });
+
+          campo.addEventListener("blur", () => {
+            campo.labels[0].style.color = "";
+          });
+        });
+      }
+      lbl().init();
       AOS.init();
     </script>
-    <script src="script.js">
-      const nav_links = document.getElementsByClassName("")
+    <script>
+      function toggleOutrosField() {
+        const radios = document.getElementsByName("motivo");
+        const outrosField = document.getElementById("outrosField");
+
+        for (let radio of radios) {
+          if (radio.checked && radio.value === "outros") {
+            outrosField.classList.remove("hidden");
+            return;
+          }
+        }
+        outrosField.classList.add("hidden");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const radios = document.getElementsByName("motivo");
+        radios.forEach((radio) => {
+          radio.addEventListener("change", toggleOutrosField);
+        });
+      });
+
+      function enviarFormulario() {
+        const nome = document.getElementById("nome").value;
+        const telefone = document.getElementById("telefone").value;
+        const endereco = document.getElementById("endereco").value;
+        const motivo = document.querySelector(
+          'input[name="motivo"]:checked'
+        ).value;
+        const outros = document.getElementById("outros").value;
+
+        const dados = {
+          nome: nome,
+          telefone: telefone,
+          endereco: endereco,
+          motivo: motivo,
+          outros: outros,
+        };
+      }
     </script>
   </body>
 </html>

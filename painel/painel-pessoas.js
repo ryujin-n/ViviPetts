@@ -63,8 +63,8 @@ function alerta(tipo, mensagem) {
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "http://127.0.0.1:5000/api/pessoas"; // ajuste para o seu backend
-let pessoasData = [];  // Agora será preenchido pelo backend
+const API = "http://127.0.0.1:5000/api/pessoas"; 
+let pessoasData = []; 
 
 // ======================
 // BUSCAR LISTA DO BACKEND
