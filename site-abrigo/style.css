@@ -1310,3 +1310,186 @@ footer {
 #accordion-collapse h2{
   margin: 0;
 }
+
+
+/* galeria*/
+
+.adocao-section {
+  width: 100%;
+  margin-top: 7rem;
+}
+
+
+.adocao-titulo {
+  margin-left: 8rem;
+  font-family: Coolvetica;
+  font-size: 40pt;
+  color: #000000;
+  margin-bottom: 3rem;
+}
+
+.adocao-grid {
+  margin-left: 20rem;
+  width: max-content;
+  display: grid;
+  grid-template-columns: repeat(3, 22rem);
+  gap: 2.7rem;
+}
+
+.card {
+  background-color: #E2EAFC;
+  height: 26rem;
+  width: 22rem;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-img {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+}
+
+.card-info {
+  padding: 0.7rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-esquerda {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-nome {
+  font-family: Be Vietnam Pro;
+  font-weight: 700;
+  color: var(--azul1);
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.card-idade {
+  font-family: Be Vietnam Pro;
+  color: var(--azul1);
+  font-size: 1rem;
+}
+
+
+.card-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tag-linha {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.tag-icon {
+  height: 18px;
+}
+
+
+.redes-wrapper {
+  width: 100%;
+  margin-top: 4rem;
+  box-sizing: border-box;
+}
+
+.redes-container {
+  margin-left: 20rem;                            
+  width: calc(22rem * 3 + 2.7rem * 2);          
+  text-align: left;
+  font-family: "Be Vietnam Pro", sans-serif;
+}
+
+/* wrapper geral */
+.redes-wrapper {
+  width: 100%;
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;  
+}
+
+.redes-container {
+  width: calc(22rem * 3 + 2.7rem * 2); 
+  text-align: center;                
+  font-family: "Be Vietnam Pro", sans-serif;
+}
+
+.redes-texto {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 auto;
+  max-width: 60rem;
+  line-height: 1.05;
+}
+
+.redes-texto .destaque-adotar {
+  color: #FF6B35;
+  font-weight: 800;
+}
+
+.redes-botoes {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 1.6rem;
+  justify-content: center; 
+}
+
+.rede-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 2.2rem;
+  background: #ffffff;
+  border: 1px solid #e6e9ee;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #111;
+  font-size: 1.15rem;
+  font-weight: 600;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 6px rgba(16,24,40,0.03);
+}
+
+.rede-icone {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.rede-label {
+  vertical-align: middle;
+}
+
+.rede-seta {
+  width: 20px;
+  height: 20px;
+  margin-left: 0.6rem;
+  opacity: 0.95;
+}
+
+.rede-btn:hover {
+  transform: translateY(-2px);
+}
+
+.rede-btn:focus {
+  outline-offset: 3px;
+}
+
+@media (max-width: 980px) {
+  .redes-container {
+    width: calc(100% - 6rem);
+  }
+
+  .redes-botoes {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
