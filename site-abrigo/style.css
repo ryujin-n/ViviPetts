@@ -1339,6 +1339,7 @@ footer {
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+  gap: 1.2rem;
 }
 
 .card-img {
@@ -1364,7 +1365,7 @@ footer {
   font-weight: 700;
   color: var(--azul1);
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 15pt;
 }
 
 .card-idade {
@@ -1471,9 +1472,7 @@ footer {
 }
 
 .rede-btn:hover {
-  transform: translateY(-2px);
-}
-
-.rede-btn:focus {
-  outline-offset: 3px;
+  background-color: var(--rosinha1);
+  color: #ffffff;
+  transition: all 0.3s ease-in-out;
 }
