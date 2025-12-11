@@ -1,4 +1,4 @@
-// ====== FUNÇÕES DE MODAL ======
+// ====== FUNÇÕES DE MODAL ====== 
 function abrirModal(id) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -151,6 +151,17 @@ function atualizarContadoresDoacoes() {
 
     document.getElementById("total-valor").textContent =
         "R$ " + totalDinheiro.toFixed(2);
+
+    const totalRacao = donationsData.reduce((acc, d) => {
+        if (["ração", "racao"].includes(String(d.tipo_doacao || "").toLowerCase())) {
+            const n = parseNumber(d.valor_doacao);
+            return acc + (isNaN(n) ? 0 : n);
+        }
+        return acc;
+    }, 0);
+
+    document.getElementById("total-racao").textContent =
+        (Number.isInteger(totalRacao) ? totalRacao : totalRacao.toFixed(1)) + " Kg";
 }
 
 // ====== MAIS RECENTE ======
