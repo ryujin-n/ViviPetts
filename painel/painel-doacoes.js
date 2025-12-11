@@ -1,4 +1,4 @@
-// ====== FUNÇÕES DE MODAL ====== 
+// ====== FUNÇÕES DE MODAL ======
 function abrirModal(id) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -148,7 +148,6 @@ function atualizarContadoresDoacoes() {
         }
         return acc;
     }, 0);
-
     document.getElementById("total-valor").textContent =
         "R$ " + totalDinheiro.toFixed(2);
 
@@ -159,7 +158,6 @@ function atualizarContadoresDoacoes() {
         }
         return acc;
     }, 0);
-
     document.getElementById("total-racao").textContent =
         (Number.isInteger(totalRacao) ? totalRacao : totalRacao.toFixed(1)) + " Kg";
 }
@@ -290,9 +288,7 @@ document.querySelector("[data-submit-form='alter-doacao']")
     .addEventListener("click", alterarDoacao);
 
 // ====== EXCLUIR DOAÇÃO ======
-async function excluirDoacao(e) {
-    e.preventDefault();
-
+async function excluirDoacao() {
     const id = document.getElementById("delete-id-doacao").value.trim();
     if (!id) return alerta("aviso", "Informe um ID válido.");
 
@@ -300,7 +296,7 @@ async function excluirDoacao(e) {
         const res = await fetch(API + "/" + id, { method: "DELETE" });
         if (!res.ok) throw new Error();
 
-        alerta("sucesso", "Doação deletada!");
+        alerta("sucesso", "Doação removida!");
         fecharModal("modal-excluir-doacao");
         carregarDoacoes();
     } catch {
@@ -308,5 +304,9 @@ async function excluirDoacao(e) {
     }
 }
 
+document.querySelector("[data-submit-form='delete-doacao']")
+    ?.addEventListener("click", excluirDoacao);
+
 // ====== INICIAL ======
 carregarDoacoes();
+
