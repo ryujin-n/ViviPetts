@@ -167,11 +167,24 @@ function atualizarRecentes() {
     if (!donationsData.length) return;
 
     const last = donationsData[donationsData.length - 1];
+
+    // Nome
     document.getElementById("recent-donor").textContent =
         last.pessoa_nome || `ID ${last.pessoa_id}`;
 
+    // Valor
     document.getElementById("recent-value").textContent =
         formatValorPorTipo(last.tipo_doacao, last.valor_doacao);
+
+    // Data (CORREÇÃO)
+    let dt = last.data_doacao || "-";
+
+    if (typeof dt === "string" && /^\d{4}-\d{2}-\d{2}$/.test(dt)) {
+        const p = dt.split("-");
+        dt = `${p[2]}/${p[1]}/${p[0]}`;
+    }
+
+    document.getElementById("recent-date").textContent = dt;
 }
 
 // ====== BUSCA ======
@@ -309,4 +322,3 @@ document.querySelector("[data-submit-form='delete-doacao']")
 
 // ====== INICIAL ======
 carregarDoacoes();
-
