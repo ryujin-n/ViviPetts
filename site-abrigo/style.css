@@ -1311,11 +1311,7 @@ footer {
   margin: 0;
 }
 
-
-/* galeria*/
-
 .adocao-section {
-  width: 100%;
   margin-top: 7rem;
 }
 
@@ -1329,7 +1325,7 @@ footer {
 }
 
 .adocao-grid {
-  margin-left: 20rem;
+  margin: auto;
   width: max-content;
   display: grid;
   grid-template-columns: repeat(3, 22rem);
@@ -1401,7 +1397,6 @@ footer {
 }
 
 .redes-container {
-  margin-left: 20rem;                            
   width: calc(22rem * 3 + 2.7rem * 2);          
   text-align: left;
   font-family: "Be Vietnam Pro", sans-serif;
@@ -1481,15 +1476,4 @@ footer {
 
 .rede-btn:focus {
   outline-offset: 3px;
-}
-
-@media (max-width: 980px) {
-  .redes-container {
-    width: calc(100% - 6rem);
-  }
-
-  .redes-botoes {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
 }
