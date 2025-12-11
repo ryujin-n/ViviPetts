@@ -136,11 +136,14 @@ async function cadastrarAnimal() {
     const nome = document.getElementById("add-nome").value.trim();
     const sexo = document.querySelector("input[name='add-sexo']:checked")?.value;
     const especie = document.getElementById("add-especie").value.trim();
+    const status = document.getElementById("add-status").value.trim(); 
     const resgate = document.getElementById("add-resgate").value.trim();
 
-    if (!nome || !sexo || !especie || !resgate)
-        return alerta("aviso", "Preencha todos os campos obrigatórios!");
-
+    if (!nome)    return alerta("aviso", "Nome é obrigatório!");
+    if (!sexo)    return alerta("aviso", "Sexo é obrigatório!");
+    if (!especie) return alerta("aviso", "Espécie é obrigatória!");
+    if (!status)  return alerta("aviso", "Status é obrigatório!");
+    
     try {
         const res = await fetch(API + "/", {
             method: "POST",
@@ -150,9 +153,9 @@ async function cadastrarAnimal() {
                 sexo,
                 especie,
                 nascimento: document.getElementById("add-nascimento").value.trim(),
-                resgate,
+                resgate: resgate || null, // opcional
                 microchip: document.getElementById("add-microchip").value.trim(),
-                status: document.getElementById("add-status").value.trim(),
+                status,
                 obs: document.getElementById("add-obs").value.trim()
             })
         });
@@ -169,6 +172,7 @@ async function cadastrarAnimal() {
 
 document.querySelector("[data-submit-form='add-animal']")
     .addEventListener("click", cadastrarAnimal);
+
 
 // ====== CARREGAR PARA ALTERAR  ======
 document.getElementById("alter-id").addEventListener("keyup", async e => {

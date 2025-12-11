@@ -28,7 +28,7 @@ document.querySelectorAll("[data-close-modal]").forEach(btn => {
     btn.addEventListener("click", () => fecharModal(btn.dataset.closeModal));
 });
 
-// ===== SISTEMA DE ALERTAS  =====
+// ===== SISTEMA DE ALERTAS =====
 function alerta(tipo, mensagem) {
     const container = document.getElementById("alert-container");
     if (!container) return;
@@ -54,19 +54,17 @@ function alerta(tipo, mensagem) {
         <button class="alert-close">×</button>
     `;
 
-    alertaEl
-        .querySelector(".alert-close")
-        .addEventListener("click", () => alertaEl.remove());
-
+    alertaEl.querySelector(".alert-close").addEventListener("click", () => alertaEl.remove());
     container.appendChild(alertaEl);
+
     setTimeout(() => alertaEl.remove(), 3500);
 }
 
 // ======================
 // VARIÁVEIS
 // ======================
-const API = "http://127.0.0.1:5000/api/pessoas"; 
-let pessoasData = []; 
+const API = "http://127.0.0.1:5000/api/pessoas";
+let pessoasData = [];
 let pessoaCarregada = false;
 
 // ======================
@@ -109,9 +107,14 @@ function renderPessoas(lista) {
 
 // ====== CONTADORES ======
 function atualizarContadores() {
-    document.getElementById("total-adotantes").textContent   = pessoasData.filter(p => p.tipo === "Adotante").length;
-    document.getElementById("total-voluntarios").textContent = pessoasData.filter(p => p.tipo === "Voluntário").length;
-    document.getElementById("total-doadores").textContent    = pessoasData.filter(p => p.tipo === "Doador").length;
+    document.getElementById("total-adotantes").textContent =
+        pessoasData.filter(p => p.tipo?.includes("Adotante")).length;
+
+    document.getElementById("total-voluntarios").textContent =
+        pessoasData.filter(p => p.tipo?.includes("Voluntário")).length;
+
+    document.getElementById("total-doadores").textContent =
+        pessoasData.filter(p => p.tipo?.includes("Doador")).length;
 }
 
 // ====== BUSCA ======
@@ -129,6 +132,20 @@ document.getElementById("searchInput").addEventListener("input", () => {
     renderPessoas(filtrados);
 });
 
+function obterTipos(nomeCampo) {
+    return [...document.querySelectorAll(`input[name='${nomeCampo}']:checked`)]
+        .map(c => c.value)
+        .join(", ");
+}
+
+function marcarTipos(nomeCampo, tiposString) {
+    const tipos = tiposString.split(",").map(t => t.trim());
+
+    document.querySelectorAll(`input[name='${nomeCampo}']`).forEach(cb => {
+        cb.checked = tipos.includes(cb.value);
+    });
+}
+
 // ====== ADICIONAR PESSOA ======
 async function cadastrarPessoa(e) {
     e.preventDefault();
@@ -137,7 +154,7 @@ async function cadastrarPessoa(e) {
     const telefone = document.getElementById("add-telefone").value.trim();
     const email    = document.getElementById("add-email").value.trim();
     const data     = document.getElementById("add-data").value.trim();
-    const tipo     = document.getElementById("add-tipo").value.trim();
+    const tipo     = obterTipos("add-tipo");
     const status   = document.getElementById("add-status").value.trim();
 
     if (!nome) return alerta("aviso", "Nome é obrigatório!");
@@ -162,7 +179,7 @@ async function cadastrarPessoa(e) {
 document.querySelector("[data-submit-form='add-person']")
     .addEventListener("click", cadastrarPessoa);
 
-// ====== CARREGAR PARA ALTERAR  ======
+// ====== CARREGAR PARA ALTERAR ======
 document.getElementById("alter-id").addEventListener("keyup", async e => {
     if (e.key !== "Enter") return;
 
@@ -180,8 +197,9 @@ document.getElementById("alter-id").addEventListener("keyup", async e => {
         document.getElementById("alter-telefone").value = p.telefone;
         document.getElementById("alter-email").value    = p.email;
         document.getElementById("alter-data").value     = p.data;
-        document.getElementById("alter-tipo").value     = p.tipo;
         document.getElementById("alter-status").value   = p.status;
+
+        marcarTipos("alter-tipo", p.tipo || "");
 
         alerta("sucesso", "Pessoa carregada para alteração.");
     } catch {
@@ -189,12 +207,12 @@ document.getElementById("alter-id").addEventListener("keyup", async e => {
     }
 });
 
-// ====== ALTERAR PESSOA  ======
+// ====== ALTERAR PESSOA ======
 async function alterarPessoa(e) {
     e.preventDefault();
 
     if (!pessoaCarregada)
-        return alerta("aviso", "Carregue a pessoa pelo ID (ENTER) antes de alterar.");
+        return alerta("aviso", "Carregue a pessoa pelo ID antes de alterar.");
 
     const id = document.getElementById("alter-id").value.trim();
 
@@ -207,7 +225,7 @@ async function alterarPessoa(e) {
                 telefone: document.getElementById("alter-telefone").value.trim(),
                 email: document.getElementById("alter-email").value.trim(),
                 data: document.getElementById("alter-data").value.trim(),
-                tipo: document.getElementById("alter-tipo").value.trim(),
+                tipo: obterTipos("alter-tipo"),
                 status: document.getElementById("alter-status").value.trim()
             })
         });
@@ -250,4 +268,3 @@ document.querySelector("[data-submit-form='delete-person']")
 
 // ====== RENDER INICIAL ======
 carregarPessoas();
-

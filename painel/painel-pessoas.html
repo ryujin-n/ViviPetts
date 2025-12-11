@@ -140,16 +140,6 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="add-tipo">Tipo</label>
-                        <select id="add-tipo">
-                            <option value="">Selecione</option>
-                            <option value="Adotante">Adotante</option>
-                            <option value="Voluntário">Voluntário</option>
-                            <option value="Doador">Doador</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
                         <label for="add-status">Status</label>
                         <select id="add-status">
                             <option value="">Selecione</option>
@@ -158,6 +148,15 @@
                         </select>
                     </div>
                 </div>
+
+                    <div class="form-group">
+                        <label for="add-tipo">Tipo</label>
+                        <div id="add-tipo" class="checkbox-group">
+                            <label><input type="checkbox" name="add-tipo" value="Adotante"> Adotante</label>
+                            <label><input type="checkbox" name="add-tipo" value="Voluntário"> Voluntário</label>
+                            <label><input type="checkbox" name="add-tipo" value="Doador"> Doador</label>
+                        </div>
+                    </div>                
 
                 <div class="form-footer">
                     <button type="submit" class="btn azul" data-submit-form="add-person">Cadastrar</button>
@@ -209,16 +208,6 @@
                 <div class="form-row">
 
                     <div class="form-group">
-                        <label for="alter-tipo">Tipo</label>
-                        <select id="alter-tipo">
-                            <option value="">Selecione</option>
-                            <option value="Adotante">Adotante</option>
-                            <option value="Voluntário">Voluntário</option>
-                            <option value="Doador">Doador</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
                         <label for="alter-status">Status</label>
                         <select id="alter-status">
                             <option value="">Selecione</option>
@@ -227,6 +216,15 @@
                         </select>
                     </div>
                 </div>
+                
+                    <div class="form-group">
+                        <label for="alter-tipo">Tipo</label>
+                        <div id="alter-tipo" class="checkbox-group">
+                            <label><input type="checkbox" name="alter-tipo" value="Adotante"> Adotante</label>
+                            <label><input type="checkbox" name="alter-tipo" value="Voluntário"> Voluntário</label>
+                            <label><input type="checkbox" name="alter-tipo" value="Doador"> Doador</label>
+                        </div>
+                    </div>                
 
                 <div class="form-footer">
                     <button class="btn verde" data-submit-form="alter-person">Alterar</button>

@@ -1,6 +1,6 @@
 .grid-pessoas {
     grid-template-columns:
-        1fr 3.5fr 2fr 5fr 2fr 2fr 1.5fr;
+        1fr 3.5fr 2fr 5fr 2fr 1.6fr 1.5fr;
 }
 
 /* ==== MODAL - OVERLAY E BOX ===== */
@@ -84,6 +84,20 @@ input, select, textarea {
     font-size: 14px;
 }
 
+/* ==== SELECT MULTIPLE (Tipo de Pessoa) ===== */
+select[multiple] {
+    height: 105px;
+    padding: 8px;
+    cursor: pointer;
+    overflow-y: auto;
+}
+
+/* Mantém aparência consistente */
+select[multiple] option {
+    padding: 6px 4px;
+}
+
+/* ===== TEXTAREA ===== */
 textarea {
     resize: none;
     height: 90px;
@@ -144,3 +158,4 @@ textarea {
     padding: 8px;
     font-size: 14px;
 }
+
